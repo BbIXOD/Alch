@@ -1,11 +1,14 @@
-using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PotionCollision : MonoBehaviour
 {
     private Player _entity;
     public GameObject effected;
-    private readonly int _duration = 5;
+    public Dictionary<string, float> Effects = new Dictionary<string, float>();
+    public int duration = 5;
+    private string _effectName;
 
     private void Start()
     {
@@ -21,21 +24,48 @@ public class PotionCollision : MonoBehaviour
 
     protected void FixedUpdate()
     {
-        if (effected && effected.name == "Potion_Blue")
+        if (effected)
         {
-            _entity.speed *= 2;
+            Effects.Add(effected.name, duration);
+            _effectName = effected.name;
             Destroy(effected);
             effected = null;
+            switch (_effectName)
+            {
+                case "Potion_Blue":
+                    _entity.speed *= 2;
+                    return;
+                case "Potion_Frost":
+                    _entity.speed = 0;
+                    return;
+            }
         }
-        if (Math.Abs(_entity.speed - _entity.normalSpeed) < Time.fixedDeltaTime) return;
-        if (_entity.speed > _entity.normalSpeed)
-            _entity.speed -= Time.fixedDeltaTime * _entity.normalSpeed / _duration;
-        else if (_entity.speed < _entity.normalSpeed)
-            _entity.speed += Time.deltaTime * _entity.normalSpeed / _duration;
+
+        if (Effects.Count == 0)
+        {
+            return;
+        }
+        if (Effects.ContainsKey("Potion_Blue"))
+        {
+            _entity.speed -= Time.fixedDeltaTime * _entity.normalSpeed / duration;
+        }
+        if (Effects.ContainsKey("Potion_Frost"))
+        {
+            _entity.speed += Time.deltaTime * _entity.normalSpeed / duration;
+        }
+        
+        foreach (var el in Effects.Keys.ToArray())
+        {
+            Effects[el] -= Time.fixedDeltaTime;
+            if (Effects[el] <= 0) Effects.Remove(el);
+        }
+
+        
     }
     
     protected void OnTriggerEnter2D(Collider2D other)
     {
+        if(other.name == "Bullet(Clone)") return;
         effected = other.gameObject;
     }
 }    

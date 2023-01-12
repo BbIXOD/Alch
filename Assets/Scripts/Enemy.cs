@@ -9,6 +9,7 @@ public class Enemy : Player
     protected Rigidbody2D Rb;
     protected SpriteRenderer Re;
     protected GameObject Player;
+    protected PotionCollision Pot;
 
     protected void Awake()
     {
@@ -16,6 +17,7 @@ public class Enemy : Player
         Rb = GetComponent<Rigidbody2D>();
         Re = GetComponent<SpriteRenderer>();
         Player = GameObject.Find("Player");
+        Pot = gameObject.GetComponent<PotionCollision>();
     }
 
     protected void Update()
@@ -34,7 +36,11 @@ public class Enemy : Player
         Rb.velocity = transform.TransformDirection(Mov);
         if (Combo(50, 0, 0)) Live -= 2;
         if (Combo(0, 10, 5)) Live -= 2;
-        if (Combo(0, 0, 25)) speed = 0;
+        if (Combo(0, 0, 25))
+        {
+            Pot.Effects.Add("Potion_Frost", Pot.duration);
+            speed = 0;
+        }
         if (Combo(10, 10, 10))
         {
             Live -= 10;
@@ -60,15 +66,12 @@ public class Enemy : Player
 
     protected bool Combo(int r, int g, int b)
     {
-        if (r <= State[0] && g <= State[1] && b <= State[2])
-        {
-            State[0] -= r;
-            State[1] -= g;
-            State[2] -= b;
+        if (r > State[0] || g > State[1] || b > State[2]) return false;
+        State[0] -= r;
+        State[1] -= g;
+        State[2] -= b;
             
-            return true;
-        }
+        return true;
 
-        return false;
     }
 }

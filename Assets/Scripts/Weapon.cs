@@ -39,7 +39,7 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    private float Check(float var, int maxValue, float mult)
+    private static float Check(float var, int maxValue, float mult)
     {
         if (var >= maxValue) return maxValue;
         

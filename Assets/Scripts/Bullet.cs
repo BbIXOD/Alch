@@ -26,10 +26,7 @@ public class Bullet : MonoBehaviour
             _speed /= 2;
         }
         else
-        {
             _speed *= 10;
-            transform.localScale *= 2;
-        }
         transform.position = _position;
         
     }
@@ -39,7 +36,6 @@ public class Bullet : MonoBehaviour
         _ren.material.color -= (Color)(new Vector4(0, 0, 0, 3) * Time.deltaTime);
         if (_ren.material.color.a <= 0)
         {
-            Debug.Log(transform.position.z);
             Destroy(gameObject);
         }
         if (_wType == "Mortar")
@@ -47,7 +43,7 @@ public class Bullet : MonoBehaviour
             if (_position.z <= 0) return;
             _position = _trans.position;
             _trans.localScale += new Vector3(1, 1, 0) * ((_position.z - _trajectory) * Time.deltaTime);
-            _trans.Translate(new Vector3(0, 0, -_trajectory * 60) * (Time.deltaTime));
+            _trans.Translate(new Vector3(0, 0, -_trajectory * 30) * (Time.deltaTime));
         }
         _trans.Translate(new Vector3(0, 1 * _speed, 0) * (Time.deltaTime));
     }
