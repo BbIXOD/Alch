@@ -5,6 +5,7 @@ using UnityEngine;
 public class PotionCollision : MonoBehaviour
 {
     private Player _entity;
+    private Weapon _weapon;
     public GameObject effected;
     public Dictionary<string, float> Effects = new Dictionary<string, float>();
     public int duration = 5;
@@ -20,6 +21,7 @@ public class PotionCollision : MonoBehaviour
         };
 
         _entity.speed = _entity.normalSpeed;
+        if (_entity.name == "Player") _weapon = GameObject.Find("Weapon").GetComponent<Weapon>();
     }
 
     protected void FixedUpdate()
@@ -32,11 +34,23 @@ public class PotionCollision : MonoBehaviour
             effected = null;
             switch (_effectName)
             {
-                case "Potion_Blue":
+                case "Potion_Blue(Clone)":
                     _entity.speed *= 2;
                     return;
-                case "Potion_Frost":
+                case "Potion_Frost(Clone)":
                     _entity.speed = 0;
+                    return;
+                case "GunOnGround(Clone)":
+                    if (_weapon) _weapon.weaponType = "Gun";
+                    Effects.Remove(_effectName);
+                    return;
+                case "ShotgunOnGround(Clone)":
+                    if (_weapon) _weapon.weaponType = "ShotGun";
+                    Effects.Remove(_effectName);
+                    return;
+                case "MortarOnGround(Clone)":
+                    if (_weapon) _weapon.weaponType = "Mortar";
+                    Effects.Remove(_effectName);
                     return;
             }
         }
@@ -45,11 +59,11 @@ public class PotionCollision : MonoBehaviour
         {
             return;
         }
-        if (Effects.ContainsKey("Potion_Blue"))
+        if (Effects.ContainsKey("Potion_Blue(Clone)"))
         {
             _entity.speed -= Time.fixedDeltaTime * _entity.normalSpeed / duration;
         }
-        if (Effects.ContainsKey("Potion_Frost"))
+        if (Effects.ContainsKey("Potion_Frost(Clone)"))
         {
             _entity.speed += Time.deltaTime * _entity.normalSpeed / duration;
         }
@@ -65,6 +79,7 @@ public class PotionCollision : MonoBehaviour
     
     protected void OnTriggerEnter2D(Collider2D other)
     {
+        if (_entity.live <= 0) return;
         if(other.name == "Bullet(Clone)") return;
         effected = other.gameObject;
     }

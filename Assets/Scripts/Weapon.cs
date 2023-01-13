@@ -6,7 +6,7 @@ public class Weapon : MonoBehaviour
 {
     public float mana;
     private float _cooldown;
-    public string weaponType = "Gun";
+    public string weaponType = "Mortar";
     [SerializeField] private GameObject bullet;
     private Vector3 _ang;
     [NonSerialized] public int BulletType = 1;
@@ -14,7 +14,7 @@ public class Weapon : MonoBehaviour
     private void Update()
     {
         mana = Check(mana, 10, 10);
-        _cooldown = Check(_cooldown, 1, 1.5f);
+        _cooldown = Check(_cooldown, 1, 9f);
         if (Input.GetAxis("Mouse ScrollWheel") > 0 || Input.GetMouseButtonDown(1))
         {
             BulletType++;
@@ -51,7 +51,7 @@ public class Weapon : MonoBehaviour
         if (mana < 10) return;
         for (byte el = 0; el <= mana; el++)
         {
-            _ang = transform.eulerAngles + new Vector3(0, 0, Random.Range(-10, 10));
+            _ang = transform.eulerAngles + new Vector3(0, 0, Random.Range(-10, 11));
             Instantiate(bullet, transform.position, Quaternion.Euler(_ang));
         }
         mana = 0;
@@ -60,9 +60,10 @@ public class Weapon : MonoBehaviour
     private void FireGun()
     {
         if (mana < 1.5 || _cooldown < 1) return;
-        _ang = transform.eulerAngles + new Vector3(0, 0, Random.Range(-1, 1));
+        _ang = transform.eulerAngles + new Vector3(0, 0, Random.Range(-1, 2));
         Instantiate(bullet, transform.position, Quaternion.Euler(_ang));
         mana -= 1.5f;
+        _cooldown = 0;
     }
 
     private void FireShotGun()
@@ -70,7 +71,7 @@ public class Weapon : MonoBehaviour
         if (mana < 10) return;
         for (byte el = 0; el <= mana; el++)
         {
-            _ang = transform.eulerAngles + new Vector3(0, 0, Random.Range(-15, 15));
+            _ang = transform.eulerAngles + new Vector3(0, 0, Random.Range(-15, 16));
             Instantiate(bullet, transform.position, Quaternion.Euler(_ang));
         }
         mana = 0;

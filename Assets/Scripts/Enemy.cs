@@ -3,17 +3,19 @@ using UnityEngine;
 public class Enemy : Player
 {
     protected int[] State = new int[3];
-    protected int X, Y, Live = 10;
+    protected int X, Y;
     protected float V, H;
     protected Vector3 Mov;
     protected Rigidbody2D Rb;
     protected SpriteRenderer Re;
     protected GameObject Player;
+    public GameObject[] weapon = new GameObject[3];
     protected PotionCollision Pot;
 
     protected void Awake()
     {
         normalSpeed = 20;
+        live = 10;
         Rb = GetComponent<Rigidbody2D>();
         Re = GetComponent<SpriteRenderer>();
         Player = GameObject.Find("Player");
@@ -27,23 +29,32 @@ public class Enemy : Player
     
     protected void FixedUpdate()
     {
-        if (Live <= 0) Destroy(gameObject);
+        if (live <= 0) Destroy(gameObject);
         X = Player.transform.position.x > transform.position.x ? 1 : -1;
         Y = Player.transform.position.y > transform.position.y ? 1 : -1;
         H = X * speed * Time.fixedDeltaTime;
         V = Y * speed * Time.fixedDeltaTime;
         Mov = new Vector3(H, V, 0);
         Rb.velocity = transform.TransformDirection(Mov);
-        if (Combo(50, 0, 0)) Live -= 2;
-        if (Combo(0, 10, 5)) Live -= 2;
+        if (Combo(50, 0, 0)) live -= 2;
+        if (Combo(0, 10, 5)) live -= 2;
         if (Combo(0, 0, 25))
         {
-            Pot.Effects.Add("Potion_Frost", Pot.duration);
+            Pot.Effects.Add("Potion_Frost(Clone)", Pot.duration);
             speed = 0;
         }
         if (Combo(10, 10, 10))
         {
-            Live -= 10;
+            live -= 10;
+        }
+
+        if (Combo(3, 0, 2))
+        {
+            live -= 10;
+            if (live > 0) return; 
+            var tr = transform;
+            var w = weapon[Random.Range(0, 3)];
+            Instantiate(w, tr.position, Quaternion.Euler(tr.eulerAngles));
         }
     }
 

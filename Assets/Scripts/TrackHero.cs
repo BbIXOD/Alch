@@ -16,9 +16,12 @@ public class TrackHero : MonoBehaviour
     private void FixedUpdate()
     {
         _oldPos = transform.position;
-        _oldPos.z = -10f;
         _newPos = _player.position;
-        _newPos.z = -10f;
+        if (gameObject.CompareTag("MainCamera"))
+        {
+            _oldPos.z = -10f;
+            _newPos.z = -10f;
+        }
         transform.position = Vector3.Lerp(_oldPos, _newPos, Speed*Time.fixedDeltaTime);
     }
 }

@@ -4,6 +4,7 @@ public class Player : MonoBehaviour
 {
     private float _v, _h, _angle; 
     public float speed, normalSpeed = 150;
+    public int live = 1;
     private Vector3 _pos, _ang, _mov;
     private Rigidbody2D _rb;
     private Camera _camera;
