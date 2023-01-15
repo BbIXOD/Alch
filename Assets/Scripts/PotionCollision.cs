@@ -59,6 +59,14 @@ public class PotionCollision : MonoBehaviour
         {
             return;
         }
+
+        if (Effects.ContainsKey("Potion_Blue(Clone)") && Effects.ContainsKey("Potion_Frost(Clone)"))
+        {
+            Effects.Remove("Potion_Blue(Clone)");
+            Effects.Remove("Potion_Frost(Clone)");
+            _entity.speed = _entity.normalSpeed;
+        }
+            
         if (Effects.ContainsKey("Potion_Blue(Clone)"))
         {
             _entity.speed -= Time.fixedDeltaTime * _entity.normalSpeed / duration;

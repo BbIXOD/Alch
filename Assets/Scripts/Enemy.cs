@@ -37,20 +37,20 @@ public class Enemy : Player
         Mov = new Vector3(H, V, 0);
         Rb.velocity = transform.TransformDirection(Mov);
         if (Combo(50, 0, 0)) live -= 2;
+        if (Combo(10, 10, 10))
+        {
+            live -= 10;
+        }
         if (Combo(0, 10, 5)) live -= 2;
         if (Combo(0, 0, 25))
         {
             Pot.Effects.Add("Potion_Frost(Clone)", Pot.duration);
             speed = 0;
         }
-        if (Combo(10, 10, 10))
-        {
-            live -= 10;
-        }
 
-        if (Combo(3, 0, 2))
+        if (Combo(10, 20, 0))
         {
-            live -= 10;
+            live -= 2;
             if (live > 0) return; 
             var tr = transform;
             var w = weapon[Random.Range(0, 3)];
