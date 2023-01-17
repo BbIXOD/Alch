@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Enemy : Player
+public class Enemy : Entity
 {
     protected int[] State = new int[3];
     protected int X, Y;

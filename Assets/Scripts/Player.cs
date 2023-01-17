@@ -1,16 +1,16 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Entity
 {
-    private float _v, _h, _angle; 
-    public float speed, normalSpeed = 150;
-    public int live = 1;
+    private float _v, _h, _angle;
     private Vector3 _pos, _ang, _mov;
     private Rigidbody2D _rb;
     private Camera _camera;
 
-    private void Start()
+    private void Awake()
     {
+        live = 1;
+        normalSpeed = 150;
         _rb = GetComponent<Rigidbody2D>();
         _camera = Camera.main;
     }

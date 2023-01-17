@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PotionCollision : MonoBehaviour
 {
-    private Player _entity;
+    private Entity _entity;
     private Weapon _weapon;
     public GameObject effected;
     public Dictionary<string, float> Effects = new Dictionary<string, float>();
