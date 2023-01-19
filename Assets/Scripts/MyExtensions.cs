@@ -14,5 +14,10 @@ namespace MyExtensions
         {
             return new Color(col.r, col.g, col.b, alpha);
         }
+
+        public static Vector3 SetWidth(this Vector3 size, float height)
+        {
+            return new Vector3(height, size.y, size.z);
+        }
     }
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Enemy : Entity
 {
-    protected int[] State = new int[3];
+    public int[] states = new int[3];
     protected int X, Y;
     protected float V, H;
     protected Vector3 Mov;
@@ -24,7 +24,7 @@ public class Enemy : Entity
 
     protected void Update()
     {
-        Re.material.color = new Color((float)State[0] / 50, (float)State[1] / 50, (float)State[2] / 50, 1);
+        Re.material.color = new Color((float)states[0] / 50, (float)states[1] / 50, (float)states[2] / 50, 1);
     }
     
     protected void FixedUpdate()
@@ -56,6 +56,9 @@ public class Enemy : Entity
             var w = weapon[Random.Range(0, 3)];
             Instantiate(w, tr.position, Quaternion.Euler(tr.eulerAngles));
         }
+        for(var i = 0; i < states.Length; i++)
+            if (states[i] > 50)
+                states[i] = 50;
     }
 
     protected void OnCollisionEnter2D(Collision2D col)
@@ -71,16 +74,16 @@ public class Enemy : Entity
         var col = collision.gameObject;
         var e = collision.gameObject.GetComponent<Bullet>();
         e.type--;
-        State[e.type] += 1;
+        states[e.type] += 1;
         Destroy(col);
     }
 
     protected bool Combo(int r, int g, int b)
     {
-        if (r > State[0] || g > State[1] || b > State[2]) return false;
-        State[0] -= r;
-        State[1] -= g;
-        State[2] -= b;
+        if (r > states[0] || g > states[1] || b > states[2]) return false;
+        states[0] -= r;
+        states[1] -= g;
+        states[2] -= b;
             
         return true;
 
