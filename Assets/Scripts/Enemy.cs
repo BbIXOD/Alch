@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Enemy : Entity
 {
@@ -9,7 +10,8 @@ public class Enemy : Entity
     protected SpriteRenderer Re;
     public GameObject[] weapon = new GameObject[3];
     protected PotionCollision Pot;
-    protected Pathfinder Path;
+    protected NavMeshAgent Agent;
+    protected Transform Pos;
 
     protected void Awake()
     {
@@ -17,8 +19,10 @@ public class Enemy : Entity
         live = 10;
         Rb = GetComponent<Rigidbody2D>();
         Re = GetComponent<SpriteRenderer>();
-        Pot = gameObject.GetComponent<PotionCollision>();
-        Path = GetComponent<Pathfinder>();
+        Pot = GetComponent<PotionCollision>();
+        Agent = GetComponent<NavMeshAgent>();
+        Pos = GameObject.Find("Player").transform;
+        Agent = GetComponent<NavMeshAgent> ();
     }
 
     protected void Update()
@@ -28,14 +32,8 @@ public class Enemy : Entity
     
     protected void FixedUpdate()
     {
+        Agent.SetDestination(Pos.position);
         if (live <= 0) Destroy(gameObject);
-        //X = Player.transform.position.x > transform.position.x ? 1 : -1;
-        //Y = Player.transform.position.y > transform.position.y ? 1 : -1;
-        
-        H = Path.direct.x * speed * Time.fixedDeltaTime;
-        V = Path.direct.y * speed * Time.fixedDeltaTime;
-        Mov = new Vector3(H, V, 0);
-        Rb.velocity = transform.TransformDirection(Mov);
         if (Combo(50, 0, 0)) live -= 2;
         if (Combo(10, 10, 10))
         {

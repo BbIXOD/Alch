@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -17,7 +18,7 @@ public class Pathfinder : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _curDepth = 200;
+        _curDepth = 10;
         Step((Vector2)transform.position + direct, direct, 1);
         Shuffle();
         foreach (var v in _directs)
@@ -38,37 +39,48 @@ public class Pathfinder : MonoBehaviour
             _curDepth = depth;
             return;
         }
-        if (CheckCon(pos)) return;
+        if (!CheckCon(pos)) return;
         Shuffle();
         depth++;
         foreach (var v in _directs)
         {
-            Step(pos + v, first, depth);
+            var newPos = new Vector2(pos.x + v.x, pos.y + v.y);
+            Step(newPos, first, depth);
         }
-        
+
     }
     
     private bool CheckDest(Vector2 pos)
     {
-        if (!CheckCon(pos)) return false;
-        return (Physics2D.Raycast(pos, Vector2.zero).transform.name == "Player" ||
-                Physics2D.Raycast(pos + new Vector2(_size.x, 0), Vector2.zero)
-                    .transform.name == "Player" ||
-                Physics2D.Raycast(pos - new Vector2(_size.x, 0), Vector2.zero)
-                    .transform.name == "Player" ||
-                Physics2D.Raycast(pos + new Vector2(0, _size.y), Vector2.zero)
-                    .transform.name == "Player" ||
-                Physics2D.Raycast(pos - new Vector2(0, _size.y), Vector2.zero)
-                    .transform.name == "Player");
+        return CheckCol(pos) ||
+               CheckCol(pos + new Vector2(_size.x, 0)) ||
+               CheckCol(pos - new Vector2(_size.x, 0)) ||
+               CheckCol(pos + new Vector2(0, _size.y)) ||
+               CheckCol(pos - new Vector2(0, _size.y));
+
+        bool CheckCol(Vector2 p)
+        {
+            try
+            {
+                return Physics2D.Raycast(p, Vector2.zero).transform.name == "Player";
+            }
+            catch (NullReferenceException) { return false; }
+        }
     }
 
     private bool CheckCon(Vector2 pos)
     {
-        return (!Physics2D.Raycast(pos, Vector2.zero) &&
-                !Physics2D.Raycast(pos + new Vector2(_size.x, 0), Vector2.zero) &&
-                !Physics2D.Raycast(pos - new Vector2(_size.x, 0), Vector2.zero) &&
-                !Physics2D.Raycast(pos + new Vector2(0, _size.y), Vector2.zero) &&
-                !Physics2D.Raycast(pos - new Vector2(0, _size.y), Vector2.zero));
+        return IsOther(pos) ||
+                IsOther(pos + new Vector2(_size.x, 0)) &&
+                IsOther(pos - new Vector2(_size.x, 0)) &&
+                IsOther(pos + new Vector2(0, _size.y)) &&
+                IsOther(pos - new Vector2(0, _size.y));
+
+        bool IsOther(Vector2 p)
+        {
+            var hit = Physics2D.Raycast(p, Vector2.zero);
+            return !hit || hit.transform.gameObject == gameObject;
+        }
     }
 
     private void Shuffle()
