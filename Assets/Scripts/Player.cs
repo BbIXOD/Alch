@@ -10,7 +10,7 @@ public class Player : Entity
     private void Awake()
     {
         live = 1;
-        normalSpeed = 150;
+        normalSpeed = 250;
         _rb = GetComponent<Rigidbody2D>();
         _camera = Camera.main;
     }

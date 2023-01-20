@@ -13,7 +13,7 @@ public class Enemy : Entity
 
     protected void Awake()
     {
-        normalSpeed = 20;
+        normalSpeed = 100;
         live = 10;
         Rb = GetComponent<Rigidbody2D>();
         Re = GetComponent<SpriteRenderer>();
