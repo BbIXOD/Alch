@@ -1,14 +1,14 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class Pathfinder : MonoBehaviour
 {
     private Vector2 _size, _directNew;
-    [FormerlySerializedAs("_direct")] public Vector2 direct = Vector2.one;
+    public Vector2 direct = Vector2.up;
     private int _curDepth;
-    private readonly Vector2[] _directs = { Vector2.up, Vector2.down, Vector2.left, Vector2.right };
+    private Vector2[] _directs = { Vector2.up, Vector2.down, Vector2.left, Vector2.right };
     private Enemy _owner;
     private void Awake()
     {
@@ -20,6 +20,7 @@ public class Pathfinder : MonoBehaviour
     {
         _curDepth = 200;
         Step((Vector2)transform.position + direct, direct, 1);
+        Shuffle();
         foreach (var v in _directs)
         {
             if (v == direct) continue;
@@ -51,7 +52,7 @@ public class Pathfinder : MonoBehaviour
     private bool CheckDest(Vector2 pos)
     {
         if (!CheckCon(pos)) return false;
-        return (Physics2D.Raycast(pos, Vector2.zero).transform.gameObject.name == "Player" ||
+        return (Physics2D.Raycast(pos, Vector2.zero).transform.name == "Player" ||
                 Physics2D.Raycast(pos + new Vector2(_size.x, 0), Vector2.zero)
                     .transform.name == "Player" ||
                 Physics2D.Raycast(pos - new Vector2(_size.x, 0), Vector2.zero)
@@ -69,5 +70,11 @@ public class Pathfinder : MonoBehaviour
                 !Physics2D.Raycast(pos - new Vector2(_size.x, 0), Vector2.zero) &&
                 !Physics2D.Raycast(pos + new Vector2(0, _size.y), Vector2.zero) &&
                 !Physics2D.Raycast(pos - new Vector2(0, _size.y), Vector2.zero));
+    }
+
+    private void Shuffle()
+    {
+        var l = _directs.Select(_ => _directs[Random.Range(0, _directs.Length)]).ToArray();
+        _directs = l;
     }
 }
