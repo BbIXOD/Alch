@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -6204285557927019336}
   - component: {fileID: 2091796852}
   - component: {fileID: 7933838378910582171}
+  - component: {fileID: 2709384936346990053}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -128,6 +129,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   normalSpeed: 10
+  live: 0
+  states: 000000000000000000000000
+  weapon:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!50 &2091796852
 Rigidbody2D:
   serializedVersion: 4
@@ -162,3 +169,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effected: {fileID: 0}
+  duration: 5
+--- !u!114 &2709384936346990053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6547032245404782692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34baf4eee83dc554c811d63fd68938b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direct: {x: 1, y: 1}
