@@ -51,7 +51,7 @@ public class Weapon : MonoBehaviour
         if (mana < 10) return;
         for (byte el = 0; el <= mana; el++)
         {
-            _ang = transform.eulerAngles + new Vector3(0, 0, Random.Range(-10, 11));
+            _ang = transform.eulerAngles + new Vector3(0, 0, Random.Range(-15, 16));
             Instantiate(bullet, transform.position, Quaternion.Euler(_ang));
         }
         mana = 0;

@@ -20,7 +20,7 @@ public class Bullet : MonoBehaviour
         _position = _trans.position;
         if (_wType == "Mortar")
         {
-            _position += new Vector3(0, 0, 1) * Random.Range(7, 10);
+            _position += new Vector3(0, 0, 1) * Random.Range(8, 13);
             _trajectory = _position.z / 2;
             _speed *= _position.z;
             _speed /= 2;
@@ -43,7 +43,7 @@ public class Bullet : MonoBehaviour
             if (_position.z <= 0) return;
             _position = _trans.position;
             _trans.localScale += new Vector3(1, 1, 0) * ((_position.z - _trajectory) * Time.deltaTime);
-            _trans.Translate(new Vector3(0, 0, -_trajectory * 30) * (Time.deltaTime));
+            _trans.Translate(new Vector3(0, 0, -_trajectory * 10) * (Time.deltaTime));
         }
         _trans.Translate(new Vector3(0, 1 * _speed, 0) * (Time.deltaTime));
     }
