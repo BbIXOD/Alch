@@ -1,24 +1,17 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy : Entity
+public abstract class Enemy : Entity
 {
     public int[] states = new int[3];
-    protected float V, H;
-    protected Vector3 Mov;
-    protected Rigidbody2D Rb;
-    protected SpriteRenderer Re;
     public GameObject[] weapon = new GameObject[3];
     protected PotionCollision Pot;
     protected NavMeshAgent Agent;
     protected Transform Pos;
+    protected float Agro;
 
     protected void Awake()
     {
-        normalSpeed = 3;
-        live = 10;
-        Rb = GetComponent<Rigidbody2D>();
-        Re = GetComponent<SpriteRenderer>();
         Pot = GetComponent<PotionCollision>();
         Agent = GetComponent<NavMeshAgent>();
         Pos = GameObject.Find("Player").transform;
@@ -35,10 +28,9 @@ public class Enemy : Entity
                 states[i] = 50;
     }
     
-    protected void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         Agent.speed = speed;
-        Agent.SetDestination(Pos.position);
         if (live <= 0) Destroy(gameObject);
         if (Combo(50, 0, 0)) live -= 2;
         if (Combo(10, 10, 10))

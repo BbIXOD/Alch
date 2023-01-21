@@ -16,7 +16,7 @@ public class PotionCollision : MonoBehaviour
         _entity = gameObject.name switch
         {
             "Player" => gameObject.GetComponent<Player>(),
-            "Enemy(Clone)" => gameObject.GetComponent<Enemy>(),
+            "Enemy(Clone)" => gameObject.GetComponent<TrackingEnemy>(),
             _ => _entity
         };
 
