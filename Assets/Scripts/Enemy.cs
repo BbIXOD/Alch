@@ -15,7 +15,7 @@ public class Enemy : Entity
 
     protected void Awake()
     {
-        normalSpeed = 2;
+        normalSpeed = 3;
         live = 10;
         Rb = GetComponent<Rigidbody2D>();
         Re = GetComponent<SpriteRenderer>();
@@ -23,15 +23,21 @@ public class Enemy : Entity
         Agent = GetComponent<NavMeshAgent>();
         Pos = GameObject.Find("Player").transform;
         Agent = GetComponent<NavMeshAgent> ();
+        Agent.updateRotation = false;
+        Agent.updateUpAxis = false;
     }
 
     protected void Update()
     {
-        Re.material.color = new Color((float)states[0] / 50, (float)states[1] / 50, (float)states[2] / 50, 1);
+        //Re.material.color = new Color((float)states[0] / 50, (float)states[1] / 50, (float)states[2] / 50, 1);
+        for(var i = 0; i < states.Length; i++)
+            if (states[i] > 50)
+                states[i] = 50;
     }
     
     protected void FixedUpdate()
     {
+        Agent.speed = speed;
         Agent.SetDestination(Pos.position);
         if (live <= 0) Destroy(gameObject);
         if (Combo(50, 0, 0)) live -= 2;
@@ -42,7 +48,8 @@ public class Enemy : Entity
         if (Combo(0, 10, 5)) live -= 2;
         if (Combo(0, 0, 25))
         {
-            Pot.Effects.Add("Potion_Frost(Clone)", Pot.duration);
+            if (Pot.Effects.ContainsKey("Potion_Frost(Clone)")) Pot.Effects["Potion_Frost(Clone)"] = Pot.duration;
+            else Pot.Effects.Add("Potion_Frost(Clone)", Pot.duration);
             speed = 0;
         }
 
@@ -54,9 +61,6 @@ public class Enemy : Entity
             var w = weapon[Random.Range(0, 3)];
             Instantiate(w, tr.position, Quaternion.Euler(tr.eulerAngles));
         }
-        for(var i = 0; i < states.Length; i++)
-            if (states[i] > 50)
-                states[i] = 50;
     }
 
     protected void OnCollisionEnter2D(Collision2D col)

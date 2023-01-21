@@ -16,7 +16,7 @@ public class PotionCollision : MonoBehaviour
         _entity = gameObject.name switch
         {
             "Player" => gameObject.GetComponent<Player>(),
-            "Enemy" => gameObject.GetComponent<Enemy>(),
+            "Enemy(Clone)" => gameObject.GetComponent<Enemy>(),
             _ => _entity
         };
 
@@ -28,8 +28,9 @@ public class PotionCollision : MonoBehaviour
     {
         if (effected)
         {
-            Effects.Add(effected.name, duration);
             _effectName = effected.name;
+            if (Effects.ContainsKey(_effectName)) Effects[_effectName] = duration;
+            else Effects.Add(_effectName, duration);
             Destroy(effected);
             effected = null;
             switch (_effectName)
