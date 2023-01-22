@@ -1,59 +1,46 @@
-
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Dog : Enemy
 {
-    public Dog leader;
-    private Dog _me;
-    public int pride;
-    private const int BigPride = 10;
-    private List<Dog> _friends = new List<Dog>();
+    public AlphaDog leader;
     public Vector3 myPos;
     private float _range;
-    private void Start()
+    protected virtual void Start()
     {
         live = 5;
-        normalSpeed = 2;
-        Agro = 70;
+        normalSpeed = 3;
+        Agro = 30;
         _range = Agro;
-        _me = GetComponent<Dog>();
     }
 
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
-        leader = null;
-        pride = 1;
-        _friends.Clear();
         myPos = transform.position;
-        var p = Pos.position;
-        if ((myPos - Pos.position).magnitude > Agro)
-            return;
-        foreach (var dog in GameObject.FindGameObjectsWithTag("Dog"))
+        if (leader)
         {
-            if ((dog.transform.position - myPos).magnitude > _range) continue;
-            _friends.Add(dog.GetComponent<Dog>());
-            if (!leader)
+            if ((leader.transform.position - myPos).magnitude > _range / 2)
+                agent.SetDestination(leader.transform.position);
+            foreach (var dog in GameObject.FindGameObjectsWithTag("Dog"))
             {
-                _friends[^1].leader = _me;
-                pride++;
-            }
-            else
-            {
-                _friends[^1].leader = leader;
+                if ((dog.transform.position - myPos).magnitude > _range) continue;
+                leader.friends.Add(dog.GetComponent<Dog>());
+                if (leader.friends[^1].leader) return;
+                leader.friends[^1].leader = leader;
                 leader.pride++;
+                Debug.Log("Catch");
             }
         }
-        if (!leader) return;
-        _friends.Add(_me);
-        if (pride < BigPride)
+        else
         {
-            foreach (var dog in _friends)
-                dog.Agent.SetDestination(p - myPos * p.magnitude);
+            agent.SetDestination(5 * (myPos - Pos.position).normalized + myPos);
         }
-        else 
-            foreach (var dog in _friends)
-                dog.Agent.SetDestination(Pos.position);
+    }
+
+    private void OnDestroy()
+    {
+        if (!leader) return;
+        leader.friends.Remove(GetComponent<Dog>());
+        leader.pride--;
     }
 }

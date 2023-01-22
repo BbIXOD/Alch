@@ -15,8 +15,10 @@ public class PotionCollision : MonoBehaviour
     {
         _entity = gameObject.name switch
         {
-            "Player" => gameObject.GetComponent<Player>(),
-            "Enemy(Clone)" => gameObject.GetComponent<TrackingEnemy>(),
+            "Player" => GetComponent<Player>(),
+            "Enemy(Clone)" => GetComponent<TrackingEnemy>(),
+            "Dog(Clone)" => GetComponent<Dog>(),
+            "AlphaDog(Clone)" => GetComponent<AlphaDog>(),
             _ => _entity
         };
 
