@@ -11,8 +11,8 @@ public class TrackingEnemy : Enemy
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
-        if ((transform.position - Pos.position).magnitude > Agro)
+        if ((transform.position - Pos).magnitude > Agro)
             return;
-        agent.SetDestination(Pos.position);
+        agent.SetDestination(Pos);
     }
 }

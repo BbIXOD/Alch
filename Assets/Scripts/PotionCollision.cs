@@ -19,6 +19,7 @@ public class PotionCollision : MonoBehaviour
             "Enemy(Clone)" => GetComponent<TrackingEnemy>(),
             "Dog(Clone)" => GetComponent<Dog>(),
             "AlphaDog(Clone)" => GetComponent<AlphaDog>(),
+            "Gnus(Clone)" => GetComponent<Swarm>(),
             _ => _entity
         };
 

@@ -7,14 +7,15 @@ public abstract class Enemy : Entity
     public GameObject[] weapon = new GameObject[3];
     protected PotionCollision Pot;
     public NavMeshAgent agent;
-    protected Transform Pos;
+    protected Transform Pt;
+    protected Vector3 Pos;
     protected float Agro;
 
     protected void Awake()
     {
         Pot = GetComponent<PotionCollision>();
         agent = GetComponent<NavMeshAgent>();
-        Pos = GameObject.Find("Player").transform;
+        Pt = GameObject.Find("Player").transform;
         agent = GetComponent<NavMeshAgent> ();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
@@ -30,6 +31,7 @@ public abstract class Enemy : Entity
     
     protected virtual void FixedUpdate()
     {
+        Pos = Pt.position;
         agent.speed = speed;
         if (live <= 0) Destroy(gameObject);
         if (Combo(50, 0, 0)) live -= 2;

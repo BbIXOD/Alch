@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class AlphaDog : Dog
 {
@@ -15,16 +16,17 @@ public class AlphaDog : Dog
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
-        var p = Pos.position;
-        
+        if ((Pos - myPos).magnitude > Agro) return;
         if (pride < BigPride)
         {
             foreach (var dog in friends)
-                dog.agent.SetDestination(5 * (dog.myPos - p).normalized + dog.myPos);
+                dog.agent.SetDestination(5 * (dog.myPos - Pos).normalized + dog.myPos);
         }
         else 
             foreach (var dog in friends)
-                dog.agent.SetDestination(Pos.position);
+                dog.agent.SetDestination(Pos);
+
+        Debug.Log(agent.speed);
     }
 
     private void OnDestroy()

@@ -19,21 +19,19 @@ public class Dog : Enemy
         myPos = transform.position;
         if (leader)
         {
-            if ((leader.transform.position - myPos).magnitude > _range / 2)
-                agent.SetDestination(leader.transform.position);
-            foreach (var dog in GameObject.FindGameObjectsWithTag("Dog"))
+            if ((leader.transform.position - myPos).magnitude > _range)
+                agent.SetDestination(leader.myPos);
+            foreach (var dog in FindObjectsOfType<Dog>())
             {
-                if ((dog.transform.position - myPos).magnitude > _range) continue;
-                leader.friends.Add(dog.GetComponent<Dog>());
-                if (leader.friends[^1].leader) return;
-                leader.friends[^1].leader = leader;
+                if ((dog.myPos - myPos).magnitude > _range || dog.leader) continue;
+                leader.friends.Add(dog);
+                dog.leader = leader;
                 leader.pride++;
-                Debug.Log("Catch");
             }
         }
-        else
+        else if ((Pos - myPos).magnitude <= Agro)
         {
-            agent.SetDestination(5 * (myPos - Pos.position).normalized + myPos);
+            agent.SetDestination(5 * (myPos - Pos).normalized + myPos);
         }
     }
 
