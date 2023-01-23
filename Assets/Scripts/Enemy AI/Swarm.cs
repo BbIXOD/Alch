@@ -1,10 +1,8 @@
-using UnityEngine;
 
 public class Swarm : Enemy
 {
     public Swarm leader;
     private Swarm _me;
-    public Vector3 myPos;
     public int count = 1;
     public bool alive = true;
     private const int MCount = 5;
@@ -23,7 +21,6 @@ public class Swarm : Enemy
     {
         base.FixedUpdate();
         if (!leader.alive) leader = _me;
-        myPos = transform.position;
         foreach (var s in FindObjectsOfType<Swarm>())
         { 
             if (s.leader.count > leader.count || s.leader == leader
@@ -32,16 +29,15 @@ public class Swarm : Enemy
             leader.count++;
         }
 
-        if ((leader.myPos - myPos).magnitude > _range / 1.25f && leader.myPos != myPos)
+        if ((leader.myPos - myPos).magnitude > _range * 2 && leader.myPos != myPos)
         {
             leader.count--;
             leader = _me;
             count = 1;
         }
-        if ((leader.myPos - myPos).magnitude > Agro) agent.SetDestination(leader.myPos);
-        if ((Pos - myPos).magnitude > Agro) return; 
-        if (leader.count < MCount) agent.SetDestination(5 * (myPos - Pos).normalized + myPos);
-        else agent.SetDestination(Pos);
+        if ((leader.myPos - myPos).magnitude > Agro) SetDest(leader.myPos, false);
+        if (leader.count < MCount) SetDest(5 * (myPos - Pos).normalized + myPos);
+        else SetDest(Pos);
 
     }
 

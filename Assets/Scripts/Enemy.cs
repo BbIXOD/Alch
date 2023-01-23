@@ -1,21 +1,28 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 public abstract class Enemy : Entity
 {
     public int[] states = new int[3];
     public GameObject[] weapon = new GameObject[3];
-    protected PotionCollision Pot;
+    private PotionCollision _pot;
     public NavMeshAgent agent;
-    protected Transform Pt;
+    private Transform _pt;
     protected Vector3 Pos;
+    public Vector3 myPos;
     protected float Agro;
+    protected float Dist;
+    private  Entity _player;
 
     protected void Awake()
     {
-        Pot = GetComponent<PotionCollision>();
+        _pot = GetComponent<PotionCollision>();
         agent = GetComponent<NavMeshAgent>();
-        Pt = GameObject.Find("Player").transform;
+        var find = GameObject.Find("Player");
+        _pt = find.transform;
+        _player = find.GetComponent<Player>();
         agent = GetComponent<NavMeshAgent> ();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
@@ -31,7 +38,9 @@ public abstract class Enemy : Entity
     
     protected virtual void FixedUpdate()
     {
-        Pos = Pt.position;
+        Pos = _pt.position;
+        myPos = transform.position;
+        Dist = (Pos - myPos).magnitude;
         agent.speed = speed;
         if (live <= 0) Destroy(gameObject);
         if (Combo(50, 0, 0)) live -= 2;
@@ -42,36 +51,29 @@ public abstract class Enemy : Entity
         if (Combo(0, 10, 5)) live -= 2;
         if (Combo(0, 0, 25))
         {
-            if (Pot.Effects.ContainsKey("Potion_Frost(Clone)")) Pot.Effects["Potion_Frost(Clone)"] = Pot.duration;
-            else Pot.Effects.Add("Potion_Frost(Clone)", Pot.duration);
+            if (_pot.Effects.ContainsKey("Potion_Frost(Clone)")) _pot.Effects["Potion_Frost(Clone)"] = _pot.duration;
+            else _pot.Effects.Add("Potion_Frost(Clone)", _pot.duration);
             speed = 0;
         }
 
         if (Combo(10, 20, 0))
         {
             live -= 2;
-            if (live > 0) return; 
-            var tr = transform;
+            if (live > 0) return;
             var w = weapon[Random.Range(0, 3)];
-            Instantiate(w, tr.position, Quaternion.Euler(tr.eulerAngles));
+            Instantiate(w, myPos, Quaternion.Euler(0f, 0f, 0f));
         }
     }
 
     protected void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.name == "Player")
-            Destroy(col.gameObject);
-    }
-
-    protected void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.name != "Bullet(Clone)" ||
-            collision.gameObject.GetComponent<Transform>().position.z > 2) return;
-        var col = collision.gameObject;
-        var e = collision.gameObject.GetComponent<Bullet>();
+            _player.live--;
+        if (col.gameObject.name != "Bullet(Clone)" ||
+            col.gameObject.GetComponent<Transform>().position.z > 2) return;
+        var e = col.gameObject.GetComponent<PBullet>();
         e.type--;
         states[e.type] += 1;
-        Destroy(col);
     }
 
     protected bool Combo(int r, int g, int b)
@@ -83,5 +85,15 @@ public abstract class Enemy : Entity
             
         return true;
 
+    }
+
+    public void SetDest(Vector3 pos, bool range = true)
+    {
+        if (range && Dist > Agro) return;
+        try
+        {
+            agent.SetDestination(pos);
+        }
+        catch (Exception) { /*Debug.LogWarning(e);*/ }
     }
 }

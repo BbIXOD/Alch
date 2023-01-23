@@ -3,7 +3,8 @@ using UnityEngine;
 public class Player : Entity
 {
     private float _v, _h, _angle;
-    private Vector3 _pos, _ang, _mov;
+    private Vector3 _pos, _ang;
+    private Vector2 _mov;
     private Rigidbody2D _rb;
     private Camera _camera;
 
@@ -23,7 +24,7 @@ public class Player : Entity
         transform.rotation = Quaternion.Euler(0f, 0f, _angle);
         _v = Input.GetAxis("Vertical") * speed * Time.fixedDeltaTime;
         _h = Input.GetAxis("Horizontal") * speed * Time.fixedDeltaTime;
-        _mov = new Vector3(_h, _v, 0);
+        _mov = new Vector2(_h, _v);
         _rb.velocity = _mov;
     }
 }

@@ -16,17 +16,15 @@ public class AlphaDog : Dog
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
-        if ((Pos - myPos).magnitude > Agro) return;
+        if (Dist > Agro) return;
         if (pride < BigPride)
         {
             foreach (var dog in friends)
-                dog.agent.SetDestination(5 * (dog.myPos - Pos).normalized + dog.myPos);
+                dog.SetDest(5 * (dog.myPos - Pos).normalized + dog.myPos, false);
         }
         else 
             foreach (var dog in friends)
-                dog.agent.SetDestination(Pos);
-
-        Debug.Log(agent.speed);
+                dog.SetDest(Pos, false);
     }
 
     private void OnDestroy()

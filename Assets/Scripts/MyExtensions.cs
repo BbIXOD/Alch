@@ -19,5 +19,12 @@ namespace MyExtensions
         {
             return new Vector3(height, size.y, size.z);
         }
+        
+        public static float Check(float var, int maxValue, float mult)
+        {
+            if (var >= maxValue) return maxValue;
+        
+            return var + Time.deltaTime * mult;
+        }
     }
 }

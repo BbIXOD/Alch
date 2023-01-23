@@ -13,6 +13,6 @@ public class TrackingEnemy : Enemy
         base.FixedUpdate();
         if ((transform.position - Pos).magnitude > Agro)
             return;
-        agent.SetDestination(Pos);
+        SetDest(Pos);
     }
 }

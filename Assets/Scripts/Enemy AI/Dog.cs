@@ -3,7 +3,6 @@ using UnityEngine;
 public class Dog : Enemy
 {
     public AlphaDog leader;
-    public Vector3 myPos;
     private float _range;
     protected virtual void Start()
     {
@@ -29,9 +28,9 @@ public class Dog : Enemy
                 leader.pride++;
             }
         }
-        else if ((Pos - myPos).magnitude <= Agro)
+        else
         {
-            agent.SetDestination(5 * (myPos - Pos).normalized + myPos);
+            SetDest(5 * (myPos - Pos).normalized + myPos);
         }
     }
 

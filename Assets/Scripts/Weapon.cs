@@ -11,10 +11,12 @@ public class Weapon : MonoBehaviour
     private Vector3 _ang;
     [NonSerialized] public int BulletType = 1;
 
-    private void Update()
+    
+
+    private void FixedUpdate()
     {
-        mana = Check(mana, 10, 10);
-        _cooldown = Check(_cooldown, 1, 9f);
+        mana = MyExtensions.MyExtensions.Check(mana, 10, 10);
+        _cooldown = MyExtensions.MyExtensions.Check(_cooldown, 1, 9);
         if (Input.GetAxis("Mouse ScrollWheel") > 0 || Input.GetMouseButtonDown(1))
         {
             BulletType++;
@@ -39,20 +41,13 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    private static float Check(float var, int maxValue, float mult)
-    {
-        if (var >= maxValue) return maxValue;
-        
-        return var + Time.deltaTime * mult;
-    }
-
     private void FireMortar()
     {
         if (mana < 10) return;
         for (byte el = 0; el <= mana; el++)
         {
             _ang = transform.eulerAngles + new Vector3(0, 0, Random.Range(-15, 16));
-            Instantiate(bullet, transform.position, Quaternion.Euler(_ang));
+            var a = Instantiate(bullet, transform.position, Quaternion.Euler(_ang));
         }
         mana = 0;
     }
