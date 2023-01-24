@@ -14,7 +14,7 @@ public abstract class Enemy : Entity
     public Vector3 myPos;
     protected float Agro;
     protected float Dist;
-    private  Entity _player;
+    private  Player _player;
 
     protected void Awake()
     {
@@ -68,9 +68,8 @@ public abstract class Enemy : Entity
     protected void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.name == "Player")
-            _player.live--;
-        if (col.gameObject.name != "Bullet(Clone)" ||
-            col.gameObject.GetComponent<Transform>().position.z > 2) return;
+            _player.GetDamage();
+        if (col.gameObject.name != "Bullet(Clone)") return;
         var e = col.gameObject.GetComponent<PBullet>();
         e.type--;
         states[e.type] += 1;
@@ -86,14 +85,14 @@ public abstract class Enemy : Entity
         return true;
 
     }
-
-    public void SetDest(Vector3 pos, bool range = true)
+    public bool SetDest(Vector3 pos, bool range = true)
     {
-        if (range && Dist > Agro) return;
+        if (range && Dist > Agro) return false;
         try
         {
             agent.SetDestination(pos);
         }
         catch (Exception) { /*Debug.LogWarning(e);*/ }
+        return true;
     }
 }

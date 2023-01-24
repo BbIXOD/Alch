@@ -20,6 +20,7 @@ public class PotionCollision : MonoBehaviour
             "Dog(Clone)" => GetComponent<Dog>(),
             "AlphaDog(Clone)" => GetComponent<AlphaDog>(),
             "Gnus(Clone)" => GetComponent<Swarm>(),
+            "Striker(Clone)" => GetComponent<Striker>(),
             _ => _entity
         };
 
@@ -39,10 +40,11 @@ public class PotionCollision : MonoBehaviour
             switch (_effectName)
             {
                 case "Potion_Blue(Clone)":
-                    _entity.speed *= 2;
+                    _entity.speed += _entity.normalSpeed;
                     return;
                 case "Potion_Frost(Clone)":
-                    _entity.speed = 0;
+                    _entity.speed -= _entity.normalSpeed;
+                    if (_entity.speed < 0) _entity.speed = 0; 
                     return;
                 case "GunOnGround(Clone)":
                     if (_weapon) _weapon.weaponType = "Gun";

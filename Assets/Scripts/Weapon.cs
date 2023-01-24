@@ -19,14 +19,14 @@ public class Weapon : MonoBehaviour
         _cooldown = MyExtensions.MyExtensions.Check(_cooldown, 1, 9);
         if (Input.GetAxis("Mouse ScrollWheel") > 0 || Input.GetMouseButtonDown(1))
         {
-            BulletType++;
-            if (BulletType == 4) BulletType = 1;
+            if (BulletType >= 3) BulletType = 1;
+            else BulletType++;
         }
 
         if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {
-            BulletType--;
-            if (BulletType == -1) BulletType = 3;
+            if (BulletType <= 1) BulletType = 3;
+            else BulletType--;
         }
 
         if (!Input.GetMouseButton(0)) return;
@@ -47,7 +47,9 @@ public class Weapon : MonoBehaviour
         for (byte el = 0; el <= mana; el++)
         {
             _ang = transform.eulerAngles + new Vector3(0, 0, Random.Range(-15, 16));
-            var a = Instantiate(bullet, transform.position, Quaternion.Euler(_ang));
+            var a = Instantiate(bullet, transform.position, Quaternion.Euler(_ang)).GetComponent<PBullet>();
+            a.wType = weaponType;
+            a.type = BulletType;
         }
         mana = 0;
     }
@@ -56,7 +58,9 @@ public class Weapon : MonoBehaviour
     {
         if (mana < 1.5 || _cooldown < 1) return;
         _ang = transform.eulerAngles + new Vector3(0, 0, Random.Range(-1, 2));
-        Instantiate(bullet, transform.position, Quaternion.Euler(_ang));
+        var a = Instantiate(bullet, transform.position, Quaternion.Euler(_ang)).GetComponent<PBullet>();
+        a.wType = weaponType;
+        a.type = BulletType;
         mana -= 1.5f;
         _cooldown = 0;
     }
@@ -67,7 +71,9 @@ public class Weapon : MonoBehaviour
         for (byte el = 0; el <= mana; el++)
         {
             _ang = transform.eulerAngles + new Vector3(0, 0, Random.Range(-15, 16));
-            Instantiate(bullet, transform.position, Quaternion.Euler(_ang));
+            var a = Instantiate(bullet, transform.position, Quaternion.Euler(_ang)).GetComponent<PBullet>();
+            a.wType = weaponType;
+            a.type = BulletType;
         }
         mana = 0;
     }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class PBullet : Bullet
@@ -6,7 +7,7 @@ public class PBullet : Bullet
     private float _trajectory;
     private Vector3 _position;
     public int type;
-    private string _wType;
+    [FormerlySerializedAs("_wType")] public string wType;
     private Renderer _ren;
     private CircleCollider2D _ck;
     private void Start()
@@ -14,12 +15,9 @@ public class PBullet : Bullet
         _ck = GetComponent<CircleCollider2D>();
         Physics2D.IgnoreCollision(GameObject.Find("Player").GetComponent<Collider2D>(), _ck);
         Speed = 4000f;
-        var w = GameObject.Find("Weapon").GetComponent<Weapon>();
-        type = w.BulletType;
-        _wType = w.weaponType;
         _ren = GetComponent<SpriteRenderer>();
         _ren.material.color = new Color(type % 3 % 2, (type - 1) % 2, (type % 3 + 1) % 3 % 2, 1);
-        if (_wType == "Mortar")
+        if (wType == "Mortar")
         {
             _ck.enabled = false;
             _position = Tr.position;
@@ -36,7 +34,7 @@ public class PBullet : Bullet
     {
         _ren.material.color -= (Color)(new Vector4(0, 0, 0, 3) * Time.fixedDeltaTime);
         if (_ren.material.color.a <= 0) Destroy(gameObject);
-        if (_wType == "Mortar")
+        if (wType == "Mortar")
         {
             if (_position.z <= 2 && !_ck.enabled) _ck.enabled = true;
             if (_position.z <= 0) return;
