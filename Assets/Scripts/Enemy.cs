@@ -9,19 +9,20 @@ public abstract class Enemy : Entity
     public GameObject[] weapon = new GameObject[3];
     private PotionCollision _pot;
     public NavMeshAgent agent;
-    private Transform _pt;
+    protected Transform Pt;
     protected Vector3 Pos;
     public Vector3 myPos;
     protected float Agro;
     protected float Dist;
     private  Player _player;
+    protected bool Spectating = true;
 
     protected void Awake()
     {
         _pot = GetComponent<PotionCollision>();
         agent = GetComponent<NavMeshAgent>();
         var find = GameObject.Find("Player");
-        _pt = find.transform;
+        Pt = find.transform;
         _player = find.GetComponent<Player>();
         agent = GetComponent<NavMeshAgent> ();
         agent.updateRotation = false;
@@ -38,13 +39,16 @@ public abstract class Enemy : Entity
     
     protected virtual void FixedUpdate()
     {
-        Pos = _pt.position;
+        Pos = Pt.position;
         myPos = transform.position;
         Dist = (Pos - myPos).magnitude;
         agent.speed = speed;
-        var ang1 = (Pos - myPos);
-        var ang2 = Mathf.Atan2(ang1.y, ang1.x) * Mathf.Rad2Deg - 90f;
-        transform.rotation = Quaternion.Euler(0f, 0f, ang2);
+        if (Spectating)
+        {
+            var ang1 = (Pos - myPos);
+            var ang2 = Mathf.Atan2(ang1.y, ang1.x) * Mathf.Rad2Deg - 90f;
+            transform.rotation = Quaternion.Euler(0f, 0f, ang2);
+        }
         if (live <= 0) Destroy(gameObject);
         if (Combo(50, 0, 0)) live -= 2;
         if (Combo(10, 10, 10))
