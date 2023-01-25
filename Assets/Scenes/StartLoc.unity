@@ -117895,6 +117895,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Gnus(Clone)
       objectReference: {fileID: 0}
+    - target: {fileID: 9217197682304744703, guid: a00d34d8894c6a24998d5cfc1489c1cb,
+        type: 3}
+      propertyPath: m_TagString
+      value: Dog
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a00d34d8894c6a24998d5cfc1489c1cb, type: 3}
 --- !u!1 &1007238973
