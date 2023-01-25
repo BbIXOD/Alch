@@ -21,10 +21,9 @@ public class GetObj : MonoBehaviour
         {
             curObj = null;
             return;
-        } 
-        curObj = Regex.Match(Hit.transform.name, "[a-zA-Z_]+")
-            .Value
-            .Replace("_", " ");
-        
+        }
+
+        curObj = MyExtensions.MyExtensions.ToTag(Hit.transform.name);
+
     }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Text.RegularExpressions;
 
 namespace MyExtensions
 {
@@ -20,11 +21,20 @@ namespace MyExtensions
             return new Vector3(height, size.y, size.z);
         }
         
+        
+        
         public static float Check(float var, int maxValue, float mult)
         {
             if (var >= maxValue) return maxValue;
         
             return var + Time.deltaTime * mult;
+        }
+        
+        public static string ToTag(string text)
+        {
+            return Regex.Match(text, "[a-zA-Z_]+")
+                .Value
+                .Replace("_", " ");
         }
     }
 }

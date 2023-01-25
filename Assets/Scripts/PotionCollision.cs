@@ -13,14 +13,14 @@ public class PotionCollision : MonoBehaviour
 
     private void Start()
     {
-        _entity = gameObject.name switch
+        _entity = MyExtensions.MyExtensions.ToTag(gameObject.name) switch
         {
             "Player" => GetComponent<Player>(),
-            "Enemy(Clone)" => GetComponent<TrackingEnemy>(),
-            "Dog(Clone)" => GetComponent<Dog>(),
-            "AlphaDog(Clone)" => GetComponent<AlphaDog>(),
-            "Gnus(Clone)" => GetComponent<Swarm>(),
-            "Striker(Clone)" => GetComponent<Striker>(),
+            "Enemy" => GetComponent<TrackingEnemy>(),
+            "Dog" => GetComponent<Dog>(),
+            "AlphaDog" => GetComponent<AlphaDog>(),
+            "Gnus" => GetComponent<Swarm>(),
+            "Striker" => GetComponent<Striker>(),
             _ => _entity
         };
 
@@ -32,29 +32,28 @@ public class PotionCollision : MonoBehaviour
     {
         if (effected)
         {
-            _effectName = effected.name;
+            _effectName = MyExtensions.MyExtensions.ToTag(effected.name);
             if (Effects.ContainsKey(_effectName)) Effects[_effectName] = duration;
             else Effects.Add(_effectName, duration);
             Destroy(effected);
             effected = null;
             switch (_effectName)
             {
-                case "Potion_Blue(Clone)":
+                case "Potion Blue":
                     _entity.speed += _entity.normalSpeed;
                     return;
-                case "Potion_Frost(Clone)":
+                case "Potion Frost":
                     _entity.speed -= _entity.normalSpeed;
-                    if (_entity.speed < 0) _entity.speed = 0; 
                     return;
-                case "GunOnGround(Clone)":
+                case "GunOnGround":
                     if (_weapon) _weapon.weaponType = "Gun";
                     Effects.Remove(_effectName);
                     return;
-                case "ShotgunOnGround(Clone)":
+                case "ShotgunOnGround":
                     if (_weapon) _weapon.weaponType = "ShotGun";
                     Effects.Remove(_effectName);
                     return;
-                case "MortarOnGround(Clone)":
+                case "MortarOnGround":
                     if (_weapon) _weapon.weaponType = "Mortar";
                     Effects.Remove(_effectName);
                     return;
@@ -66,20 +65,20 @@ public class PotionCollision : MonoBehaviour
             return;
         }
 
-        if (Effects.ContainsKey("Potion_Blue(Clone)") && Effects.ContainsKey("Potion_Frost(Clone)"))
+        if (Effects.ContainsKey("Potion Blue") && Effects.ContainsKey("Potion Frost"))
         {
-            Effects.Remove("Potion_Blue(Clone)");
-            Effects.Remove("Potion_Frost(Clone)");
+            Effects.Remove("Potion Blue");
+            Effects.Remove("Potion Frost");
             _entity.speed = _entity.normalSpeed;
         }
             
-        if (Effects.ContainsKey("Potion_Blue(Clone)"))
+        if (Effects.ContainsKey("Potion Blue"))
         {
             _entity.speed -= Time.fixedDeltaTime * _entity.normalSpeed / duration;
         }
-        if (Effects.ContainsKey("Potion_Frost(Clone)"))
+        if (Effects.ContainsKey("Potion Frost"))
         {
-            _entity.speed += Time.deltaTime * _entity.normalSpeed / duration;
+            _entity.speed += Time.fixedDeltaTime * _entity.normalSpeed / duration;
         }
         
         foreach (var el in Effects.Keys.ToArray())

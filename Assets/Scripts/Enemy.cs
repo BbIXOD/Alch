@@ -54,9 +54,9 @@ public abstract class Enemy : Entity
         if (Combo(0, 10, 5)) live -= 2;
         if (Combo(0, 0, 25))
         {
-            if (_pot.Effects.ContainsKey("Potion_Frost(Clone)")) _pot.Effects["Potion_Frost(Clone)"] = _pot.duration;
-            else _pot.Effects.Add("Potion_Frost(Clone)", _pot.duration);
-            speed = 0;
+            if (_pot.Effects.ContainsKey("Potion Frost")) _pot.Effects["Potion Frost"] = _pot.duration;
+            else _pot.Effects.Add("Potion Frost", _pot.duration);
+            speed -= normalSpeed;
         }
 
         if (Combo(10, 20, 0))
@@ -68,7 +68,7 @@ public abstract class Enemy : Entity
         }
     }
 
-    protected void OnCollisionEnter2D(Collision2D col)
+    protected void OnCollisionStay2D(Collision2D col)
     {
         if (col.gameObject.name == "Player")
             _player.GetDamage();
