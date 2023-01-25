@@ -42,6 +42,9 @@ public abstract class Enemy : Entity
         myPos = transform.position;
         Dist = (Pos - myPos).magnitude;
         agent.speed = speed;
+        var ang1 = (Pos - myPos);
+        var ang2 = Mathf.Atan2(ang1.y, ang1.x) * Mathf.Rad2Deg - 90f;
+        transform.rotation = Quaternion.Euler(0f, 0f, ang2);
         if (live <= 0) Destroy(gameObject);
         if (Combo(50, 0, 0)) live -= 2;
         if (Combo(10, 10, 10))

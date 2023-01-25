@@ -25,9 +25,7 @@ public class Striker : Enemy
         if (_mana >= 10)
         {
             _mana = 0;
-            var ang1 = (Pos - myPos);
-            var ang2 = Mathf.Atan2(ang1.y, ang1.x) * Mathf.Rad2Deg - 90f;
-            var a = Instantiate(bullet, myPos, Quaternion.Euler(0f, 0f, ang2));
+            var a = Instantiate(bullet, myPos, Quaternion.Euler(transform.eulerAngles));
             Physics2D.IgnoreCollision(a.GetComponent<Collider2D>(), _coll);
         }
     }
