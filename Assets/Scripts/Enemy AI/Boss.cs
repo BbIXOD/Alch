@@ -3,7 +3,7 @@ using UnityEngine;
 public class Boss : Enemy
 {
     private float _mana, _spin, _mass;
-    private const float Power = 350; 
+    private const float Power = 300; 
     private Rigidbody2D _prb;
     private void Start()
     {
@@ -21,7 +21,7 @@ public class Boss : Enemy
         {
             transform.Rotate(new Vector3(0, 0, 20));
             _prb.AddForce( _mass * Power * (myPos - Pos).normalized);
-            _spin -= Time.fixedDeltaTime;
+            _spin -= Time.fixedDeltaTime * 2;
             return;
         }
         if (!SetDest(Pos)) return;

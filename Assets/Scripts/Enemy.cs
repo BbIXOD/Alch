@@ -9,11 +9,10 @@ public abstract class Enemy : Entity
     public GameObject[] weapon = new GameObject[3];
     private PotionCollision _pot;
     public NavMeshAgent agent;
-    protected Transform Pt;
+    private Transform _pt;
     protected Vector3 Pos;
     public Vector3 myPos;
-    protected float Agro;
-    protected float Dist;
+    protected float Agro, Dist, RSpeed = 2;
     private  Player _player;
     protected bool Spectating = true;
 
@@ -22,7 +21,7 @@ public abstract class Enemy : Entity
         _pot = GetComponent<PotionCollision>();
         agent = GetComponent<NavMeshAgent>();
         var find = GameObject.Find("Player");
-        Pt = find.transform;
+        _pt = find.transform;
         _player = find.GetComponent<Player>();
         agent = GetComponent<NavMeshAgent> ();
         agent.updateRotation = false;
@@ -39,15 +38,16 @@ public abstract class Enemy : Entity
     
     protected virtual void FixedUpdate()
     {
-        Pos = Pt.position;
+        Pos = _pt.position;
         myPos = transform.position;
         Dist = (Pos - myPos).magnitude;
         agent.speed = speed;
-        if (Spectating)
+        if (Spectating && Dist <= Agro)
         {
             var ang1 = (Pos - myPos);
             var ang2 = Mathf.Atan2(ang1.y, ang1.x) * Mathf.Rad2Deg - 90f;
-            transform.rotation = Quaternion.Euler(0f, 0f, ang2);
+            transform.rotation = Quaternion.Lerp(transform.rotation,
+                Quaternion.Euler(new Vector3(0f, 0f, ang2)),RSpeed * Time.fixedDeltaTime);
         }
         if (live <= 0) Destroy(gameObject);
         if (Combo(50, 0, 0)) live -= 2;
@@ -76,6 +76,10 @@ public abstract class Enemy : Entity
     {
         if (col.gameObject.name == "Player")
             _player.GetDamage();
+    }
+
+    protected void OnCollisionEnter2D(Collision2D col)
+    {
         if (col.gameObject.name != "Bullet(Clone)") return;
         var e = col.gameObject.GetComponent<PBullet>();
         e.type--;
