@@ -117730,7 +117730,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mana: 0
-  weaponType: Mortar
+  weaponType: Gun
   bullet: {fileID: 4891917886205562565, guid: b4c96c64b045b584387f91dfee353cc1, type: 3}
 --- !u!1001 &642086771
 PrefabInstance:
