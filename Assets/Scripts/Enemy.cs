@@ -17,7 +17,7 @@ public abstract class Enemy : Entity
     private float _arrMake;
     private  Player _player;
     protected bool Spectating = true;
-    private int _buffed;
+    protected int Buffed;
 
     protected void Awake()
     {
@@ -42,7 +42,7 @@ public abstract class Enemy : Entity
         for(var i = 0; i < states.Length; i++)
             if (states[i] > 50)
                 states[i] = 50;
-        if (_buffed == 0) return;
+        if (Buffed == 0) return;
         _arrMake = MyExtensions.MyExtensions.Check(_arrMake, 10, 15);
         if (_arrMake < 10) return;
         var t = transform;
@@ -116,7 +116,7 @@ public abstract class Enemy : Entity
         var aura = col.gameObject.GetComponentInParent<Cool>();
         if (!aura) return;
         aura.obj.Add(this);
-        _buffed++;
+        Buffed++;
     }
     
     protected void OnTriggerExit2D(Collider2D col)
@@ -124,7 +124,7 @@ public abstract class Enemy : Entity
         var aura = col.gameObject.GetComponentInParent<Cool>();
         if (!aura) return;
         aura.obj.Remove(this);
-        _buffed--;
+        Buffed--;
     }
 
     protected bool Combo(int r, int g, int b)
@@ -150,6 +150,6 @@ public abstract class Enemy : Entity
 
     protected void GetDamage(int damage)
     {
-        live -= _buffed == 0 ? damage / 2 : damage;
+        live -= Buffed == 0 ? damage / 2 : damage;
     }
 }

@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class Cool : AbstractStriker
 {
-    public GameObject cc;
     public List<Enemy> obj = new List<Enemy>();
     protected override void Start()
     {
@@ -12,8 +11,11 @@ public class Cool : AbstractStriker
         live = 17;
         Agro = 15;
         Aim = false;
-        Instantiate(cc, myPos, Quaternion.Euler(0, 0, 0));
-
+        var cc = new GameObject("CoolCol");
+        var a = cc.AddComponent<CircleCollider2D>();
+        a.isTrigger = true;
+        a.radius = 10;
+        cc.transform.SetParent(transform, false);
     }
 
     protected override void FixedUpdate()

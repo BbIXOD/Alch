@@ -10,7 +10,7 @@ public class PotionCollision : MonoBehaviour
     public Dictionary<string, float> Effects = new Dictionary<string, float>();
     public int duration = 5;
     private string _effectName;
-
+    private string[] _pots = { "Potion Blue", "Potion Frost", "GunOnGround", "ShotgunOnGround", "MortarOnGround"};
     private void Start()
     {
         _entity = MyExtensions.MyExtensions.ToTag(gameObject.name) switch
@@ -35,6 +35,7 @@ public class PotionCollision : MonoBehaviour
         if (effected)
         {
             _effectName = MyExtensions.MyExtensions.ToTag(effected.name);
+            if (!_pots.Contains(_effectName)) return;
             if (Effects.ContainsKey(_effectName)) Effects[_effectName] = duration;
             else Effects.Add(_effectName, duration);
             Destroy(effected);
@@ -95,7 +96,7 @@ public class PotionCollision : MonoBehaviour
     protected void OnTriggerEnter2D(Collider2D other)
     {
         if (_entity.live <= 0) return;
-        if(other.name == "Bullet(Clone)") return;
+        if (gameObject.name == "CoolCol") return;
         effected = other.gameObject;
     }
 }    

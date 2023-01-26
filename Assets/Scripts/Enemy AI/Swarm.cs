@@ -36,7 +36,7 @@ public class Swarm : Enemy
             count = 1;
         }
         if ((leader.myPos - myPos).magnitude > Agro) SetDest(leader.myPos, false);
-        if (leader.count < MCount) SetDest(5 * (myPos - Pos).normalized + myPos);
+        if (leader.count < MCount && Buffed == 0) SetDest(5 * (myPos - Pos).normalized + myPos);
         else SetDest(Pos);
 
     }

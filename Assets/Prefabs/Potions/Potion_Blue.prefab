@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1474834158372614942}
   - component: {fileID: 3405031248779585417}
   - component: {fileID: 2727910013711541386}
-  - component: {fileID: 5424598926794038653}
   m_Layer: 0
   m_Name: Potion_Blue
   m_TagString: Untagged
@@ -102,24 +101,3 @@ CircleCollider2D:
   m_Offset: {x: -0.0138216615, y: 0.017591164}
   serializedVersion: 2
   m_Radius: 0.06576161
---- !u!50 &5424598926794038653
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 840090599614763417}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
