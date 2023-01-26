@@ -36,5 +36,12 @@ namespace MyExtensions
                 .Value
                 .Replace("_", " ");
         }
+
+        public static Quaternion Spectate(Vector3 yourPos, Vector3 pos)
+        {
+            var ang1 = (pos - yourPos);
+            return Quaternion.Euler
+                (new Vector3(0, 0, Mathf.Atan2(ang1.y, ang1.x) * Mathf.Rad2Deg - 90f));
+        }
     }
 }

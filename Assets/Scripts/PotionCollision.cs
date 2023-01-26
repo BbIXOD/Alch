@@ -22,6 +22,7 @@ public class PotionCollision : MonoBehaviour
             "Gnus" => GetComponent<Swarm>(),
             "Striker" => GetComponent<Striker>(),
             "Goblin Boss" => GetComponent<Boss>(),
+            "Cool goblin" => GetComponent<Cool>(),
             _ => _entity
         };
 
