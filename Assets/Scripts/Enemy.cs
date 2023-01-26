@@ -17,6 +17,7 @@ public abstract class Enemy : Entity
     private float _arrMake;
     private  Player _player;
     protected bool Spectating = true;
+    private bool _sleep = true;
     protected int Buffed;
 
     protected void Awake()
@@ -107,6 +108,9 @@ public abstract class Enemy : Entity
                 return;
             case "CoolBullet(Clone)":
                 states = new[] { 0, 0, 0 };
+                if (!_sleep) return;
+                _sleep = false;
+                Agro *= 2;
                 return;
         }
     }
