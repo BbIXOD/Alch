@@ -42,9 +42,10 @@ public class Boss : Enemy
         }
         else
         {
-            var scale = transform.localScale;
-            var v = myPos + 2 * scale.x * _rad * Random.onUnitSphere;
-            Instantiate(minion, v, Quaternion.Euler(0, 0, 0));
+            var tr = transform;
+            var v = myPos + 4 * tr.localScale.x * _rad * Random.onUnitSphere;
+            v.z = 1;
+            Instantiate(minion, v, Quaternion.Euler(tr.eulerAngles));
         }    
     }
 }

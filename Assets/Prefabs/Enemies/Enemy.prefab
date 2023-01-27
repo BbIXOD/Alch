@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 7389580479317253774}
   - component: {fileID: -7133069897695343056}
   - component: {fileID: 4972991862299918221}
-  - component: {fileID: 7933838378910582171}
   - component: {fileID: 1468443348041827377}
+  - component: {fileID: 7933838378910582171}
   - component: {fileID: 141832760}
   m_Layer: 3
   m_Name: Enemy
@@ -126,20 +126,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &7933838378910582171
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6547032245404782692}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f74ecaa5445f43245a154769bac5a238, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  effected: {fileID: 0}
-  duration: 5
 --- !u!114 &1468443348041827377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,6 +145,20 @@ MonoBehaviour:
   states: 000000000000000000000000
   agent: {fileID: 0}
   myPos: {x: 0, y: 0, z: 0}
+--- !u!114 &7933838378910582171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6547032245404782692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f74ecaa5445f43245a154769bac5a238, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effected: {fileID: 0}
+  duration: 5
 --- !u!195 &141832760
 NavMeshAgent:
   m_ObjectHideFlags: 0

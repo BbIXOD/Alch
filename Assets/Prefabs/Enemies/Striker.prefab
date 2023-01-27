@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 8406523767612054993}
   - component: {fileID: 214030981141838716}
   - component: {fileID: 214030981141838706}
-  - component: {fileID: 214030981141838713}
   - component: {fileID: -4319456722297807923}
+  - component: {fileID: 214030981141838713}
   m_Layer: 3
   m_Name: Striker
   m_TagString: Untagged
@@ -148,20 +148,6 @@ NavMeshAgent:
   m_BaseOffset: 1.15
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &214030981141838713
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 214030981141838704}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f74ecaa5445f43245a154769bac5a238, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  effected: {fileID: 0}
-  duration: 5
 --- !u!114 &-4319456722297807923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,3 +168,17 @@ MonoBehaviour:
   agent: {fileID: 0}
   myPos: {x: 0, y: 0, z: 0}
   bullet: {fileID: 1903531008993584166, guid: 8a12e5b0892069843b5610d0d84344ca, type: 3}
+--- !u!114 &214030981141838713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214030981141838704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f74ecaa5445f43245a154769bac5a238, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effected: {fileID: 0}
+  duration: 5

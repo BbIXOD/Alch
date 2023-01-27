@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 7065534113676561024}
   - component: {fileID: 4417016729042329634}
   - component: {fileID: 3639241413070232526}
-  - component: {fileID: 2166345336585607098}
   - component: {fileID: 6780220610918779467}
+  - component: {fileID: 2166345336585607098}
   m_Layer: 3
   m_Name: Goblin_Boss
   m_TagString: Untagged
@@ -148,20 +148,6 @@ NavMeshAgent:
   m_BaseOffset: 0.75
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &2166345336585607098
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1282511291950991637}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f74ecaa5445f43245a154769bac5a238, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  effected: {fileID: 0}
-  duration: 5
 --- !u!114 &6780220610918779467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,3 +168,17 @@ MonoBehaviour:
   agent: {fileID: 0}
   myPos: {x: 0, y: 0, z: 0}
   minion: {fileID: 6547032245404782692, guid: 637a582be0175434182559289f58de41, type: 3}
+--- !u!114 &2166345336585607098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1282511291950991637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f74ecaa5445f43245a154769bac5a238, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effected: {fileID: 0}
+  duration: 5

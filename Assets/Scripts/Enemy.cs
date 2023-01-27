@@ -17,7 +17,7 @@ public abstract class Enemy : Entity
     private float _arrMake, _dist;
     private  Player _player;
     protected bool Spectating = true;
-    private bool _sleep = true, _scream = true, _addRange;
+    private bool _sleep = true, _scream = true;
     protected int Buffed;
 
     protected void Awake()
@@ -65,17 +65,11 @@ public abstract class Enemy : Entity
         agent.speed = speed;
         if (_sleep)
         {
-            _scream = true;
-            if (_addRange)
+            if (!_scream)
             {
-                _addRange = false;
                 Agro /= 2;
+                _scream = true;
             }
-        }
-        else if (!_addRange)
-        {
-            Agro *= 2;
-            _addRange = true;
         }
         _sleep = agent.velocity.magnitude == 0 && Dist > Agro;
         if (Spectating && Dist <= Agro)
@@ -122,7 +116,7 @@ public abstract class Enemy : Entity
                 var e = col.gameObject.GetComponent<PBullet>();
                 e.type--;
                 states[e.type] += 1;
-                _sleep = false;
+                Call();
                 return;
             case "CoolBullet(Clone)":
                 states = new[] { 0, 0, 0 };
@@ -162,22 +156,7 @@ public abstract class Enemy : Entity
     public bool SetDest(Vector3 pos, bool range = true)
     {
         if (range && Dist > Agro) return false;
-        if (_scream)
-        {
-            _scream = false;
-            Instantiate(_shout, myPos + new Vector3(0, _dist, 0), Quaternion.Euler(0,  0, 0), transform);
-            var s = new GameObject("Scream")
-            {
-                transform =
-                {
-                    position = myPos // What is this?
-                }
-            };
-            s.AddComponent<Shout>();
-            var cc = s.AddComponent<CircleCollider2D>();
-            cc.radius = Social;
-            cc.isTrigger = true;
-        }
+        Call();
         try
         {
             agent.SetDestination(pos);
@@ -189,5 +168,25 @@ public abstract class Enemy : Entity
     private void GetDamage(int damage)
     {
         live -= Buffed == 0 ? damage / 2 : damage;
+    }
+
+    private void Call()
+    {
+        if (!_scream) return;
+        _scream = false;
+        Agro *= 2;
+        var t = transform;
+        Instantiate(_shout, myPos + t.TransformDirection(new Vector3(0, _dist, 0)), Quaternion.Euler(t.eulerAngles), transform);
+        var s = new GameObject("Scream")
+        {
+            transform =
+            {
+                position = myPos // What is this?
+            }
+        };
+        s.AddComponent<Shout>();
+        var cc = s.AddComponent<CircleCollider2D>();
+        cc.radius = Social;
+        cc.isTrigger = true;
     }
 }
