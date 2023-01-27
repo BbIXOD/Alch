@@ -10,12 +10,12 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Enemies
   - Water
   - UI
   - Bullets
   - 
-  - 
+  - OnlyEnemies
   - 
   - 
   - 

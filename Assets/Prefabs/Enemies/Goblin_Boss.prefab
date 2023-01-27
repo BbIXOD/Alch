@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 7065534113676561024}
   - component: {fileID: 4417016729042329634}
   - component: {fileID: 3639241413070232526}
-  - component: {fileID: 6780220610918779467}
   - component: {fileID: 2166345336585607098}
-  m_Layer: 0
+  - component: {fileID: 6780220610918779467}
+  m_Layer: 3
   m_Name: Goblin_Boss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -148,6 +148,20 @@ NavMeshAgent:
   m_BaseOffset: 0.75
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &2166345336585607098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1282511291950991637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f74ecaa5445f43245a154769bac5a238, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effected: {fileID: 0}
+  duration: 5
 --- !u!114 &6780220610918779467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,24 +177,7 @@ MonoBehaviour:
   speed: 0
   normalSpeed: 0
   live: 0
+  normalLive: 0
   states: 000000000000000000000000
-  weapon:
-  - {fileID: 1096141352265972143, guid: 66e29ad8c0960af4bbcdcdfda64886c2, type: 3}
-  - {fileID: 618382054427773488, guid: 7713122df89533147aa57ed46d9cbaa9, type: 3}
-  - {fileID: 1972883723583695732, guid: 93a24ab1c42cec4428d1b5e0bad157d5, type: 3}
   agent: {fileID: 0}
   myPos: {x: 0, y: 0, z: 0}
---- !u!114 &2166345336585607098
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1282511291950991637}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f74ecaa5445f43245a154769bac5a238, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  effected: {fileID: 0}
-  duration: 5

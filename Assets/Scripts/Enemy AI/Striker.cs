@@ -8,8 +8,9 @@ public class Striker : AbstractStriker
     {
         base.Start();
         normalSpeed = 2.5f;
-        live = 3;
+        normalLive = 3;
         Agro = 20;
+        Social = 10;
         Mult = 5;
     }
     

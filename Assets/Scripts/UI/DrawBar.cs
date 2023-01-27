@@ -10,6 +10,7 @@ public class DrawBar : MonoBehaviour
 {
     private GetObj _getObj;
     private Enemy _enemy;
+    private Player _player;
     public GameObject bar, text;
     private List<GameObject> _bars = new List<GameObject>();
     private const float X = -60, Y = 30, Down = 20, TextX = 100;
@@ -26,16 +27,23 @@ public class DrawBar : MonoBehaviour
         foreach(var b in _bars) Destroy(b);
         if(!_getObj.Hit) return;
         _enemy = _getObj.Hit.transform.gameObject.GetComponent<Enemy>();
+        _player = _getObj.Hit.transform.gameObject.GetComponent<Player>();
         if (_enemy)
         {
-            CreateBar(_enemy.live, Color.magenta, 10);
+            DrawBarEnemy();
+            return;
+        }
+        if (_player) CreateBar(_player.live, Color.magenta, _player.normalLive);
+    }
+
+    private void DrawBarEnemy()
+    {
+        CreateBar(_enemy.live, Color.magenta, _enemy.normalLive);
             for (var state = 0; state < 3; state++)
             {
                 var col = new Color((state + 1) % 3 % 2, state % 2, ((state + 1) % 3 + 1) % 3 % 2, 1);
                 CreateBar(_enemy.states[state], col, 50);
             }
-
-        }
     }
 
     private void CreateBar(float width, Color color, float mult)

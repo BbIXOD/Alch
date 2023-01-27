@@ -4,8 +4,9 @@ public class TrackingEnemy : Enemy
     private void Start()
     {
         normalSpeed = 3;
-        live = 10;
+        normalLive = 6;
         Agro = 15;
+        Social = Agro;
     }
 
     protected override void FixedUpdate()

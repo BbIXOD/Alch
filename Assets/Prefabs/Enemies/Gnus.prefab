@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 1071449739465670310}
   - component: {fileID: 5044363682714572663}
   - component: {fileID: 7002063979912235434}
-  - component: {fileID: 1066563679638719790}
   - component: {fileID: 3592030623327474503}
-  m_Layer: 0
+  - component: {fileID: 8475631503345316282}
+  m_Layer: 3
   m_Name: Gnus
   m_TagString: Dog
   m_Icon: {fileID: 0}
@@ -148,31 +148,6 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &1066563679638719790
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9217197682304744703}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a226d9a019c66db4f99d6b2cbaff4acf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 0
-  normalSpeed: 2
-  live: 0
-  states: 000000000000000000000000
-  weapon:
-  - {fileID: 1096141352265972143, guid: 66e29ad8c0960af4bbcdcdfda64886c2, type: 3}
-  - {fileID: 618382054427773488, guid: 7713122df89533147aa57ed46d9cbaa9, type: 3}
-  - {fileID: 1972883723583695732, guid: 93a24ab1c42cec4428d1b5e0bad157d5, type: 3}
-  agent: {fileID: 0}
-  myPos: {x: 0, y: 0, z: 0}
-  leader: {fileID: 0}
-  count: 1
-  alive: 1
 --- !u!114 &3592030623327474503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,3 +162,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effected: {fileID: 0}
   duration: 5
+--- !u!114 &8475631503345316282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9217197682304744703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a226d9a019c66db4f99d6b2cbaff4acf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0
+  normalSpeed: 0
+  live: 0
+  normalLive: 0
+  states: 000000000000000000000000
+  agent: {fileID: 0}
+  myPos: {x: 0, y: 0, z: 0}
+  leader: {fileID: 0}
+  count: 1
+  alive: 1

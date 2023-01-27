@@ -7,21 +7,22 @@ public abstract class Enemy : Entity
 {
     public int[] states = new int[3];
     private readonly GameObject[] _weapon = new GameObject[3];
-    private GameObject _buff;
+    private GameObject _buff, _shout;
     private PotionCollision _pot;
     public NavMeshAgent agent;
     private Transform _pt;
     protected Vector3 Pos;
     public Vector3 myPos;
-    protected float Agro, Dist, RSpeed = 2;
-    private float _arrMake;
+    protected float Agro, Dist, RSpeed = 2, Social;
+    private float _arrMake, _dist;
     private  Player _player;
     protected bool Spectating = true;
-    private bool _sleep = true;
+    private bool _sleep = true, _scream = true;
     protected int Buffed;
 
     protected void Awake()
     {
+        _dist = GetComponent<CircleCollider2D>().radius;
         _pot = GetComponent<PotionCollision>();
         agent = GetComponent<NavMeshAgent>();
         var find = GameObject.Find("Player");
@@ -34,6 +35,7 @@ public abstract class Enemy : Entity
         _weapon[1] = Resources.Load<GameObject>("ShotgunOnGround");
         _weapon[2] = Resources.Load<GameObject>("MortarOnGround");
         _buff = Resources.Load<GameObject>("Buff");
+        _shout = Resources.Load<GameObject>("Shout");
     }
 
     protected void Update()
@@ -47,9 +49,9 @@ public abstract class Enemy : Entity
         _arrMake = MyExtensions.MyExtensions.Check(_arrMake, 10, 15);
         if (_arrMake < 10) return;
         var t = transform;
-        var tr = t.localScale;
         var pos = t.position +
-                  new Vector3(Random.Range(-1 * tr.x, tr.x), Random.Range(-1 * tr.y, tr.y), 0);
+                  new Vector3(Random.Range(-_dist, _dist),
+                      Random.Range(-_dist, _dist), 0) * transform.localScale.x;
         Instantiate(_buff, pos, Quaternion.Euler(0, 0, 0))
             .transform.SetParent(t);
         
@@ -61,6 +63,8 @@ public abstract class Enemy : Entity
         myPos = transform.position;
         Dist = (Pos - myPos).magnitude;
         agent.speed = speed;
+        _sleep = Dist > Agro && agent.destination == myPos;
+        if (_sleep) _scream = true;
         if (Spectating && Dist <= Agro)
         {
             var ang1 = (Pos - myPos);
@@ -72,7 +76,7 @@ public abstract class Enemy : Entity
         if (Combo(50, 0, 0)) GetDamage(2);
         if (Combo(10, 10, 10))
         {
-            GetDamage(10);
+            GetDamage(5);
         }
         if (Combo(0, 10, 5)) GetDamage(2);
         if (Combo(0, 0, 25))
@@ -117,6 +121,9 @@ public abstract class Enemy : Entity
 
     protected void OnTriggerEnter2D(Collider2D col)
     {
+        if (col.gameObject.name == "Scream")
+            SetDest(Pos, false);
+        
         var aura = col.gameObject.GetComponentInParent<Cool>();
         if (!aura) return;
         aura.obj.Add(this);
@@ -144,6 +151,22 @@ public abstract class Enemy : Entity
     public bool SetDest(Vector3 pos, bool range = true)
     {
         if (range && Dist > Agro) return false;
+        if (_scream)
+        {
+            _scream = false;
+            Instantiate(_shout, myPos + new Vector3(0, _dist, 0), Quaternion.Euler(0,  0, 0), transform);
+            var s = new GameObject("Scream")
+            {
+                transform =
+                {
+                    position = myPos // What is this?
+                }
+            };
+            s.AddComponent<Shout>();
+            var cc = s.AddComponent<CircleCollider2D>();
+            cc.radius = Social;
+            cc.isTrigger = true;
+        }
         try
         {
             agent.SetDestination(pos);
@@ -152,7 +175,7 @@ public abstract class Enemy : Entity
         return true;
     }
 
-    protected void GetDamage(int damage)
+    private void GetDamage(int damage)
     {
         live -= Buffed == 0 ? damage / 2 : damage;
     }

@@ -30,11 +30,12 @@ namespace MyExtensions
             return var + Time.deltaTime * mult;
         }
         
-        public static string ToTag(string text)
+        public static string ToTag(string text, bool oneWord = false)
         {
+            var value = oneWord ? "" : " ";
             return Regex.Match(text, "[a-zA-Z_]+")
                 .Value
-                .Replace("_", " ");
+                .Replace("_", value);
         }
 
         public static Quaternion Spectate(Vector3 yourPos, Vector3 pos)

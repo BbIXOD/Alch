@@ -6,13 +6,12 @@ public class Swarm : Enemy
     public int count = 1;
     public bool alive = true;
     private const int MCount = 5;
-    private float _range;
     protected virtual void Start()
     {
-        live = 5;
+        normalLive = 4;
         normalSpeed = 3;
         Agro = 30;
-        _range = Agro;
+        Social = Agro;
         leader = GetComponent<Swarm>();
         _me = leader;
     }
@@ -24,18 +23,18 @@ public class Swarm : Enemy
         foreach (var s in FindObjectsOfType<Swarm>())
         { 
             if (s.leader.count > leader.count || s.leader == leader
-                || (s.myPos - myPos).magnitude > _range) continue;
+                || (s.myPos - myPos).magnitude > Social) continue;
             s.leader = leader; 
             leader.count++;
         }
 
-        if ((leader.myPos - myPos).magnitude > _range * 2 && leader.myPos != myPos)
+        if ((leader.myPos - myPos).magnitude > Social * 2 && leader.myPos != myPos)
         {
             leader.count--;
             leader = _me;
             count = 1;
         }
-        if ((leader.myPos - myPos).magnitude > Agro) SetDest(leader.myPos, false);
+        if ((leader.myPos - myPos).magnitude > Social) SetDest(leader.myPos, false);
         if (leader.count < MCount && Buffed == 0) SetDest(5 * (myPos - Pos).normalized + myPos);
         else SetDest(Pos);
 

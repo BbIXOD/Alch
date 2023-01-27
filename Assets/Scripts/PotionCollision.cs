@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,11 +8,20 @@ public class PotionCollision : MonoBehaviour
     private Entity _entity;
     private Weapon _weapon;
     public GameObject effected;
-    public Dictionary<string, float> Effects = new Dictionary<string, float>();
+    public Dictionary<object, float> Effects = new Dictionary<object, float>();
     public int duration = 5;
     private string _effectName;
-    private string[] _pots = { "Potion Blue", "Potion Frost", "GunOnGround", "ShotgunOnGround", "MortarOnGround"};
-    private void Start()
+    private object _ePot;
+    private enum Pots
+    {
+        PotionBlue,
+        PotionFrost,
+        GunOnGround,
+        ShotgunOnGround,
+        MortarOnGround,
+    }
+    
+    protected void Start()
     {
         _entity = MyExtensions.MyExtensions.ToTag(gameObject.name) switch
         {
@@ -27,6 +37,7 @@ public class PotionCollision : MonoBehaviour
         };
 
         _entity.speed = _entity.normalSpeed;
+        _entity.live = _entity.normalLive;
         if (_entity.name == "Player") _weapon = GameObject.Find("Weapon").GetComponent<Weapon>();
     }
 
@@ -34,29 +45,36 @@ public class PotionCollision : MonoBehaviour
     {
         if (effected)
         {
-            _effectName = MyExtensions.MyExtensions.ToTag(effected.name);
-            if (!_pots.Contains(_effectName)) return;
-            if (Effects.ContainsKey(_effectName)) Effects[_effectName] = duration;
-            else Effects.Add(_effectName, duration);
+            _effectName = MyExtensions.MyExtensions.ToTag(effected.name, true);
+            try
+            {
+                _ePot = Enum.Parse(typeof(Pots), _effectName);
+            }
+            catch (ArgumentException)
+            {
+                return;
+            }
+            if (Effects.ContainsKey(_ePot)) Effects[_ePot] = duration;
+            else Effects.Add(_ePot, duration);
             Destroy(effected);
             effected = null;
-            switch (_effectName)
+            switch (_ePot)
             {
-                case "Potion Blue":
+                case Pots.PotionBlue:
                     _entity.speed += _entity.normalSpeed;
                     return;
-                case "Potion Frost":
+                case Pots.PotionFrost:
                     _entity.speed -= _entity.normalSpeed;
                     return;
-                case "GunOnGround":
+                case Pots.GunOnGround:
                     if (_weapon) _weapon.weaponType = "Gun";
                     Effects.Remove(_effectName);
                     return;
-                case "ShotgunOnGround":
+                case Pots.ShotgunOnGround:
                     if (_weapon) _weapon.weaponType = "ShotGun";
                     Effects.Remove(_effectName);
                     return;
-                case "MortarOnGround":
+                case Pots.MortarOnGround:
                     if (_weapon) _weapon.weaponType = "Mortar";
                     Effects.Remove(_effectName);
                     return;
@@ -68,18 +86,18 @@ public class PotionCollision : MonoBehaviour
             return;
         }
 
-        if (Effects.ContainsKey("Potion Blue") && Effects.ContainsKey("Potion Frost"))
+        if (Effects.ContainsKey(Pots.PotionBlue) && Effects.ContainsKey(Pots.PotionFrost))
         {
-            Effects.Remove("Potion Blue");
-            Effects.Remove("Potion Frost");
+            Effects.Remove(Pots.PotionBlue);
+            Effects.Remove(Pots.PotionFrost);
             _entity.speed = _entity.normalSpeed;
         }
             
-        if (Effects.ContainsKey("Potion Blue"))
+        if (Effects.ContainsKey(Pots.PotionBlue))
         {
             _entity.speed -= Time.fixedDeltaTime * _entity.normalSpeed / duration;
         }
-        if (Effects.ContainsKey("Potion Frost"))
+        if (Effects.ContainsKey(Pots.PotionFrost))
         {
             _entity.speed += Time.fixedDeltaTime * _entity.normalSpeed / duration;
         }
@@ -93,10 +111,9 @@ public class PotionCollision : MonoBehaviour
         
     }
     
-    protected void OnTriggerEnter2D(Collider2D other)
+    protected virtual void OnTriggerEnter2D(Collider2D other)
     {
         if (_entity.live <= 0) return;
-        if (gameObject.name == "CoolCol") return;
         effected = other.gameObject;
     }
 }    

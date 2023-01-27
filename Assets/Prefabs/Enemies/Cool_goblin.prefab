@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 964305416680471576}
   - component: {fileID: 7419583818146679141}
   - component: {fileID: 8220881904402322619}
-  - component: {fileID: -543486054902026348}
-  - component: {fileID: -8486038035852946144}
-  m_Layer: 0
+  - component: {fileID: 2305788313583450935}
+  - component: {fileID: 261625027395732764}
+  m_Layer: 3
   m_Name: Cool_goblin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -148,28 +148,7 @@ NavMeshAgent:
   m_BaseOffset: 0.8
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &-543486054902026348
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5925380486743346553}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b383d590263c6647902c750f596fc98, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 0
-  normalSpeed: 3
-  live: 0
-  states: 000000000000000000000000
-  agent: {fileID: 0}
-  myPos: {x: 0, y: 0, z: 0}
-  bullet: {fileID: 1630295223855137401, guid: c568ed8c250c4be42aca978930ea1f44, type: 3}
-  cc: {fileID: 8199239830636244100, guid: c80cfe52143a6f54a86cfd6c9f2a7d5a, type: 3}
-  obj: []
---- !u!114 &-8486038035852946144
+--- !u!114 &2305788313583450935
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -183,3 +162,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effected: {fileID: 0}
   duration: 5
+--- !u!114 &261625027395732764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5925380486743346553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b383d590263c6647902c750f596fc98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0
+  normalSpeed: 0
+  live: 0
+  normalLive: 0
+  states: 000000000000000000000000
+  agent: {fileID: 0}
+  myPos: {x: 0, y: 0, z: 0}
+  bullet: {fileID: 1630295223855137401, guid: c568ed8c250c4be42aca978930ea1f44, type: 3}
+  obj: []

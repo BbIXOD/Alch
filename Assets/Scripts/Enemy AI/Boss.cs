@@ -8,8 +8,9 @@ public class Boss : Enemy
     private void Start()
     {
         normalSpeed = 2.5f;
-        live = 15;
+        normalLive = 10;
         Agro = 17;
+        Social = 15;
         _prb = GameObject.Find("Player").GetComponent<Rigidbody2D>();
         _mass = _prb.mass;
     }
@@ -19,6 +20,7 @@ public class Boss : Enemy
         base.FixedUpdate();
         if (_spin > 0)
         {
+            SetDest(myPos);
             transform.Rotate(new Vector3(0, 0, 20));
             _prb.AddForce( _mass * Power * (myPos - Pos).normalized);
             _spin -= Time.fixedDeltaTime * 2;

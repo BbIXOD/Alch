@@ -8,10 +8,12 @@ public class Cool : AbstractStriker
     {
         base.Start();
         normalSpeed = 3;
-        live = 17;
+        normalLive = 3;
         Agro = 15;
+        Social = 20;
         Aim = false;
         var cc = new GameObject("CoolCol");
+        cc.layer = 8;
         var a = cc.AddComponent<CircleCollider2D>();
         a.isTrigger = true;
         a.radius = 10;
