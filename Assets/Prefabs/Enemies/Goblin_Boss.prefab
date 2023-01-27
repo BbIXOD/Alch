@@ -181,3 +181,4 @@ MonoBehaviour:
   states: 000000000000000000000000
   agent: {fileID: 0}
   myPos: {x: 0, y: 0, z: 0}
+  minion: {fileID: 6547032245404782692, guid: 637a582be0175434182559289f58de41, type: 3}

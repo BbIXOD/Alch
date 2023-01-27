@@ -17,7 +17,7 @@ public abstract class Enemy : Entity
     private float _arrMake, _dist;
     private  Player _player;
     protected bool Spectating = true;
-    private bool _sleep = true, _scream = true;
+    private bool _sleep = true, _scream = true, _addRange;
     protected int Buffed;
 
     protected void Awake()
@@ -63,8 +63,21 @@ public abstract class Enemy : Entity
         myPos = transform.position;
         Dist = (Pos - myPos).magnitude;
         agent.speed = speed;
-        _sleep = Dist > Agro && agent.destination == myPos;
-        if (_sleep) _scream = true;
+        if (_sleep)
+        {
+            _scream = true;
+            if (_addRange)
+            {
+                _addRange = false;
+                Agro /= 2;
+            }
+        }
+        else if (!_addRange)
+        {
+            Agro *= 2;
+            _addRange = true;
+        }
+        _sleep = agent.velocity.magnitude == 0 && Dist > Agro;
         if (Spectating && Dist <= Agro)
         {
             var ang1 = (Pos - myPos);
@@ -109,12 +122,10 @@ public abstract class Enemy : Entity
                 var e = col.gameObject.GetComponent<PBullet>();
                 e.type--;
                 states[e.type] += 1;
+                _sleep = false;
                 return;
             case "CoolBullet(Clone)":
                 states = new[] { 0, 0, 0 };
-                if (!_sleep) return;
-                _sleep = false;
-                Agro *= 2;
                 return;
         }
     }

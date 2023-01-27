@@ -44,5 +44,12 @@ namespace MyExtensions
             return Quaternion.Euler
                 (new Vector3(0, 0, Mathf.Atan2(ang1.y, ang1.x) * Mathf.Rad2Deg - 90f));
         }
+
+        public static float RandomSign()
+        {
+            var sign = Mathf.Sign(Random.Range(-1, 1));
+            if (sign == 0) sign++;
+            return sign;
+        }
     }
 }
