@@ -1,21 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class BoadTriger : MonoBehaviour
+public class BoatTrigger : MonoBehaviour
 {
     public GameObject text;
+    private bool _here;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         text.gameObject.SetActive(true);
-
+        _here = true;
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void Update()   //if you want this in OnTriggerStay replace GetKeyDown with GetKey
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && _here)
         {
             SceneManager.LoadScene("StartLoc");
         }
@@ -24,5 +23,6 @@ public class BoadTriger : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         text.gameObject.SetActive(false);
+        _here = false;
     }
 }
