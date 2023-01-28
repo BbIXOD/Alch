@@ -11,7 +11,7 @@ public class PotionCollision : MonoBehaviour
     public Dictionary<object, float> Effects = new Dictionary<object, float>();
     public int duration = 5;
     private string _effectName;
-    private object _ePot;
+    private object _ePot, _boxer;
     private enum Pots
     {
         PotionBlue,
@@ -35,9 +35,6 @@ public class PotionCollision : MonoBehaviour
             "Cool goblin" => GetComponent<Cool>(),
             _ => _entity
         };
-
-        _entity.speed = _entity.normalSpeed;
-        _entity.live = _entity.normalLive;
         if (_entity.name == "Player") _weapon = GameObject.Find("Weapon").GetComponent<Weapon>();
     }
 
@@ -54,8 +51,12 @@ public class PotionCollision : MonoBehaviour
             {
                 return;
             }
-            if (Effects.ContainsKey(_ePot)) Effects[_ePot] = duration;
-            else Effects.Add(_ePot, duration);
+            if (Effects.ContainsKey(_ePot))
+            {
+                Effects[_ePot] = duration;
+                return;
+            }
+            Effects.Add(_ePot, duration);
             Destroy(effected);
             effected = null;
             switch (_ePot)
@@ -64,7 +65,7 @@ public class PotionCollision : MonoBehaviour
                     _entity.speed += _entity.normalSpeed;
                     return;
                 case Pots.PotionFrost:
-                    _entity.speed -= _entity.normalSpeed;
+                    _entity.speed -= _entity.normalSpeed / 2;
                     return;
                 case Pots.GunOnGround:
                     if (_weapon) _weapon.weaponType = "Gun";
@@ -85,27 +86,29 @@ public class PotionCollision : MonoBehaviour
         {
             return;
         }
-
+        
         if (Effects.ContainsKey(Pots.PotionBlue) && Effects.ContainsKey(Pots.PotionFrost))
         {
             Effects.Remove(Pots.PotionBlue);
             Effects.Remove(Pots.PotionFrost);
             _entity.speed = _entity.normalSpeed;
         }
-            
-        if (Effects.ContainsKey(Pots.PotionBlue))
-        {
-            _entity.speed -= Time.fixedDeltaTime * _entity.normalSpeed / duration;
-        }
-        if (Effects.ContainsKey(Pots.PotionFrost))
-        {
-            _entity.speed += Time.fixedDeltaTime * _entity.normalSpeed / duration;
-        }
-        
         foreach (var el in Effects.Keys.ToArray())
         {
             Effects[el] -= Time.fixedDeltaTime;
-            if (Effects[el] <= 0) Effects.Remove(el);
+            if (Effects[el] <= 0)
+            {
+                Effects.Remove(el);
+                switch (el)
+                {
+                    case Pots.PotionBlue:
+                        _entity.speed -= _entity.normalSpeed;
+                        return;
+                    case Pots.PotionFrost:
+                        _entity.speed += _entity.normalSpeed / 2;
+                        return;
+                }
+            }
         }
 
         

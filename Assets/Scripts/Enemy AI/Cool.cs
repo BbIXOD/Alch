@@ -4,9 +4,9 @@ using UnityEngine;
 public class Cool : AbstractStriker
 {
     public List<Enemy> obj = new List<Enemy>();
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
         normalSpeed = 3;
         normalLive = 3;
         Agro = 15;

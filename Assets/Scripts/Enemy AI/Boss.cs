@@ -3,12 +3,13 @@ using UnityEngine;
 public class Boss : Enemy
 {
     private float _mana, _spin, _mass;
-    private const float Power = 300; 
+    private const float Power = 250; 
     private Rigidbody2D _prb;
     public GameObject minion;
     private float _rad;
-    private void Start()
+    protected override void Awake()
     {
+        base.Awake();
         normalSpeed = 2.5f;
         normalLive = 10;
         Agro = 17;

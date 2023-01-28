@@ -6,8 +6,9 @@ public class Swarm : Enemy
     public int count = 1;
     public bool alive = true;
     private const int MCount = 5;
-    protected virtual void Start()
+    protected override void Awake()
     {
+        base.Awake();
         normalLive = 4;
         normalSpeed = 3;
         Agro = 30;

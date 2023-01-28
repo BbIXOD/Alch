@@ -16,6 +16,8 @@ public class Player : Entity
         _rb = GetComponent<Rigidbody2D>();
         _sr = GetComponent<SpriteRenderer>();
         _camera = Camera.main;
+        speed = normalSpeed;
+        live = normalLive;
     }
 
     private void Update()

@@ -20,7 +20,7 @@ public abstract class Enemy : Entity
     private bool _sleep = true, _scream = true;
     protected int Buffed;
 
-    protected void Awake()
+    protected virtual void Awake()
     {
         _dist = GetComponent<CircleCollider2D>().radius;
         _pot = GetComponent<PotionCollision>();
@@ -36,6 +36,12 @@ public abstract class Enemy : Entity
         _weapon[2] = Resources.Load<GameObject>("MortarOnGround");
         _buff = Resources.Load<GameObject>("Buff");
         _shout = Resources.Load<GameObject>("Shout");
+    }
+
+    private void Start()
+    {
+        speed = normalSpeed;
+        live = normalLive;
     }
 
     protected void Update()
@@ -89,8 +95,11 @@ public abstract class Enemy : Entity
         if (Combo(0, 0, 25))
         {
             if (_pot.Effects.ContainsKey("Potion Frost")) _pot.Effects["Potion Frost"] = _pot.duration;
-            else _pot.Effects.Add("Potion Frost", _pot.duration);
-            speed -= normalSpeed;
+            else
+            {
+                _pot.Effects.Add("Potion Frost", _pot.duration);
+                speed -= normalSpeed;
+            }
         }
 
         if (Combo(10, 20, 0))

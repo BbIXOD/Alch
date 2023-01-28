@@ -10,8 +10,9 @@ public abstract class AbstractStriker : Enemy
     protected Quaternion Angle;
     protected bool Aim = true;
 
-    protected virtual void Start()
+    protected override void Awake()
     {
+        base.Awake();
         _coll = GetComponent<Collider2D>();
     }
 
