@@ -12,7 +12,7 @@ public class PotionCollision : MonoBehaviour
     public int duration = 5;
     private string _effectName;
     private object _ePot, _boxer;
-    private enum Pots
+    public enum Pots
     {
         PotionBlue,
         PotionFrost,

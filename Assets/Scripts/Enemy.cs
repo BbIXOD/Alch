@@ -6,23 +6,28 @@ using Random = UnityEngine.Random;
 public abstract class Enemy : Entity
 {
     public int[] states = new int[3];
+    
     private readonly GameObject[] _weapon = new GameObject[3];
-    private GameObject _buff, _shout;
+    private GameObject _buff, _shout, _spike;
+    
     private PotionCollision _pot;
     public NavMeshAgent agent;
     private Transform _pt;
+    private  Player _player;
+    private CircleCollider2D _cCol;
+    
     protected Vector3 Pos;
     public Vector3 myPos;
     protected float Agro, Dist, RSpeed = 2, Social;
     private float _arrMake, _dist;
-    private  Player _player;
     protected bool Spectating = true;
     private bool _sleep = true, _scream = true;
     protected int Buffed;
 
     protected virtual void Awake()
     {
-        _dist = GetComponent<CircleCollider2D>().radius;
+        _cCol = GetComponent<CircleCollider2D>();
+        _dist = _cCol.radius;
         _pot = GetComponent<PotionCollision>();
         agent = GetComponent<NavMeshAgent>();
         var find = GameObject.Find("Player");
@@ -31,11 +36,13 @@ public abstract class Enemy : Entity
         agent = GetComponent<NavMeshAgent> ();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
+        
         _weapon[0] = Resources.Load<GameObject>("GunOnGround");
         _weapon[1] = Resources.Load<GameObject>("ShotgunOnGround");
         _weapon[2] = Resources.Load<GameObject>("MortarOnGround");
         _buff = Resources.Load<GameObject>("Buff");
         _shout = Resources.Load<GameObject>("Shout");
+        _spike = Resources.Load<GameObject>("Spike");
     }
 
     private void Start()
@@ -94,10 +101,11 @@ public abstract class Enemy : Entity
         if (Combo(0, 10, 5)) GetDamage(2);
         if (Combo(0, 0, 25))
         {
-            if (_pot.Effects.ContainsKey("Potion Frost")) _pot.Effects["Potion Frost"] = _pot.duration;
+            if (_pot.Effects.ContainsKey(PotionCollision.Pots.PotionFrost))
+                _pot.Effects[PotionCollision.Pots.PotionFrost] = _pot.duration;
             else
             {
-                _pot.Effects.Add("Potion Frost", _pot.duration);
+                _pot.Effects.Add(PotionCollision.Pots.PotionFrost, _pot.duration);
                 speed -= normalSpeed;
             }
         }
@@ -108,6 +116,18 @@ public abstract class Enemy : Entity
             if (live > 0) return;
             var w = _weapon[Random.Range(0, 3)];
             Instantiate(w, myPos, Quaternion.Euler(0f, 0f, 0f));
+        }
+
+        if (Combo(20, 5, 0) && _pot.Effects.ContainsKey(PotionCollision.Pots.PotionFrost))
+        {
+            GetDamage(3);
+            if (live > 0) return;
+            for (var i = 0; i < 4; i++)
+            {
+                var c = Instantiate(_spike, myPos, Quaternion.Euler(0, 0, 90 * i))
+                    .GetComponent<Collider2D>();
+                Physics2D.IgnoreCollision(c, _cCol);
+            }
         }
     }
 
@@ -129,6 +149,9 @@ public abstract class Enemy : Entity
                 return;
             case "CoolBullet(Clone)":
                 states = new[] { 0, 0, 0 };
+                return;
+            case "Spike(Clone)":
+                GetDamage(2);
                 return;
         }
     }
@@ -176,7 +199,7 @@ public abstract class Enemy : Entity
 
     private void GetDamage(int damage)
     {
-        live -= Buffed == 0 ? damage / 2 : damage;
+        live -= Buffed == 0 ? damage : damage / 2;
     }
 
     private void Call()
