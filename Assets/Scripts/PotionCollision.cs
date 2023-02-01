@@ -16,6 +16,7 @@ public class PotionCollision : MonoBehaviour
     {
         PotionBlue,
         PotionFrost,
+        PotionHealth,
         GunOnGround,
         ShotgunOnGround,
         MortarOnGround,
@@ -66,6 +67,9 @@ public class PotionCollision : MonoBehaviour
                     return;
                 case Pots.PotionFrost:
                     _entity.speed -= _entity.normalSpeed / 2;
+                    return;
+                case Pots.PotionHealth:
+                    _entity.live = _entity.normalLive;
                     return;
                 case Pots.GunOnGround:
                     if (_weapon) _weapon.weaponType = "Gun";

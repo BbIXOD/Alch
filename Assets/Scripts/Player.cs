@@ -39,7 +39,7 @@ public class Player : Entity
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.name == "EBullet(Clone)") GetDamage();
+        if (col.gameObject.CompareTag("DamagingPlayer")) GetDamage();
     }
 
     public void GetDamage()
