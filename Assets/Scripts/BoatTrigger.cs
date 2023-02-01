@@ -29,13 +29,12 @@ public class BoatTrigger : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) && _here)
         {
-            if (GetComponents<Enemy>().Length == 0)
+            if (GameObject.FindObjectOfType<Enemy>())
             {
                 StopAllCoroutines();
                 StartCoroutine(TempText());
-                return;
             }
-            SceneManager.LoadScene(location);
+            else SceneManager.LoadScene(location);
         }
     }
 

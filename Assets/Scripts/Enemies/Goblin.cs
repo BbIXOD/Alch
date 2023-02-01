@@ -8,6 +8,7 @@ public class Goblin : Enemy
     {
         base.Awake();
         _shout = Resources.Load<GameObject>("Shout");
+        transform.Rotate(new Vector3(0, 0, Random.Range(0, 360)));
     }
 
     protected override void OnTriggerEnter2D(Collider2D col)
