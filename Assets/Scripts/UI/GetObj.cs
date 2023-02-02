@@ -7,11 +7,12 @@ public class GetObj : MonoBehaviour
     public string curObj;
     private Camera _camera;
     private int _layers;
+    private 
 
     protected void Awake()
     {
-        const int l = 1 << 8;
-        _layers = ~l;
+        const int l = 1 << 8, m = 1 << 2;
+        _layers = ~(l | m);
         _camera = Camera.main;
     }
 
