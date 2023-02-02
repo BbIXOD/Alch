@@ -204,4 +204,10 @@ public abstract class Enemy : Entity
         _scream = false;
         Agro *= 2;
     }
+
+    private void OnDestroy()
+    {
+        agent.enabled = false;
+        _player.GetComponent<Throw>().Charge++;
+    }
 }

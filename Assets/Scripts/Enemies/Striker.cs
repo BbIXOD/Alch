@@ -10,7 +10,7 @@ public class Striker : AbstractStriker
         normalSpeed = 2.5f;
         normalLive = 3;
         Agro = 20;
-        Social = 10;
+        Social = 7;
         Mult = 5;
     }
     

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4191283896517236297}
   - component: {fileID: 8045527684926436439}
   - component: {fileID: 7775425903414611436}
-  - component: {fileID: -1037968890613373239}
+  - component: {fileID: 4958820432983865420}
   m_Layer: 0
   m_Name: CoolBullet
   m_TagString: Untagged
@@ -124,7 +124,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &-1037968890613373239
+--- !u!114 &4958820432983865420
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -133,6 +133,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1630295223855137401}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 419fa8daf95f50f4b9b7f8057224e6ad, type: 3}
+  m_Script: {fileID: 11500000, guid: d8a29fa4a946849498ac8c6990d3d2d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 550
