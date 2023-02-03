@@ -73,7 +73,7 @@ public abstract class Enemy : Entity
     {
         Pos = _pt.position;
         myPos = transform.position;
-        Dist = (Pos - myPos).magnitude;
+        Dist = ((Vector2)(Pos - myPos)).magnitude;
         agent.speed = speed;
         if (_sleep)
         {

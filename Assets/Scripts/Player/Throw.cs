@@ -9,7 +9,7 @@ public class Throw : MonoBehaviour
     private void Update()
     {
         if (Charge > 5) Charge = 5;
-        if (!(Input.GetKeyDown(KeyCode.Q) || Charge == 5)) return;
+        if (!(Input.GetKeyDown(KeyCode.Q) && Charge == 5)) return;
         Charge = 0;
         Instantiate(throwable, transform.position, Quaternion.Euler(0, 0, 0));
     }
