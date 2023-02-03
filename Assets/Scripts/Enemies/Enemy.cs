@@ -105,7 +105,7 @@ public abstract class Enemy : Entity
             else
             {
                 _pot.Effects.Add(PotionCollision.Pots.PotionFrost, _pot.duration);
-                speed -= normalSpeed;
+                speed -= normalSpeed / 2;
             }
         }
 
@@ -151,6 +151,10 @@ public abstract class Enemy : Entity
                 return;
             case "Spike(Clone)":
                 GetDamage(2);
+                if (_scream) WakeUp();
+                return;
+            case "Explode(Clone)":
+                if (_scream) WakeUp();
                 return;
         }
     }

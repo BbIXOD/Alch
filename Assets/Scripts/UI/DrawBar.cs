@@ -11,6 +11,7 @@ public class DrawBar : MonoBehaviour
     private GetObj _getObj;
     private Enemy _enemy;
     private Player _player;
+    private Throw _ult;
     public GameObject bar, text;
     private List<GameObject> _bars = new List<GameObject>();
     private const float X = -60, Y = 30, Down = 20, TextX = 100;
@@ -33,7 +34,12 @@ public class DrawBar : MonoBehaviour
             DrawBarEnemy();
             return;
         }
-        if (_player) CreateBar(_player.live, Color.magenta, _player.normalLive);
+        if (_player)
+        {
+            CreateBar(_player.live, Color.magenta, _player.normalLive);
+            _ult = _getObj.Hit.transform.gameObject.GetComponent<Throw>();
+            CreateBar(_ult.Charge, Color.yellow, 5);
+        }
     }
 
     private void DrawBarEnemy()

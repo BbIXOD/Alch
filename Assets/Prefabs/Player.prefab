@@ -156,6 +156,7 @@ MonoBehaviour:
   normalSpeed: 0
   live: 0
   normalLive: 0
+  compas: {fileID: 4390022967919227245, guid: 4041007871793704ca82757ba957293d, type: 3}
 --- !u!114 &5661287971118346537
 MonoBehaviour:
   m_ObjectHideFlags: 0
