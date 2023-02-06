@@ -28,6 +28,12 @@ public class Compas : MonoBehaviour
             _sr.color = Color.green;
             _spect = GameObject.Find("Boat");
             if (!_spect) _spect = GameObject.Find("Purple Portal");
+            Debug.Log("Nearest");
+            if (!_spect)
+            {
+                _spect = gameObject;
+                Destroy(_spect);
+            }
         }
         var tp = transform.position;
         var magnitude = Mathf.Infinity;

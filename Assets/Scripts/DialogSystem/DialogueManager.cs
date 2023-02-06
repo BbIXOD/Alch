@@ -12,6 +12,7 @@ public class DialogueManager : MonoBehaviour
     public Animator startAnim;
 
     private Queue<string> sentences;
+    private byte _index;
 
     private void Start()
     {
@@ -20,27 +21,26 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(Dialogue dialogue)
     {
+        Debug.Log("Dialogue");
         boxAnim.SetBool("boxOpen", true);
         startAnim.SetBool("startOpen", false);
 
         nameText.text = dialogueText.name;
         sentences.Clear();
 
-        foreach(string sentence in dialogue.sentences)
-        {
-            sentences.Enqueue(sentence);
-        }
-        DisplayNextSentences();
+        
+        DisplayNextSentences(dialogue.sentences);
     }
 
-    public void DisplayNextSentences()
+    public void DisplayNextSentences(string[] sentences)
     {
-        if(sentences.Count == 0)
+        if(_index == this.sentences.Count)
         {
             EndDialogue();
             return;
         }
-        string sentence = sentences.Dequeue();
+        string sentence = sentences[_index];
+        _index++;
         StopAllCoroutines();
         StartCoroutine(TypeSentence(sentence));
     }
@@ -48,10 +48,10 @@ public class DialogueManager : MonoBehaviour
     IEnumerator TypeSentence(string sentence)
     {
         dialogueText.text = "";
-        foreach(char letter in sentence.ToCharArray())
+        foreach(var letter in sentence)
         {
             dialogueText.text += letter;
-            yield return null;
+            yield return new WaitForSeconds(.1f);
         }
     }
 
