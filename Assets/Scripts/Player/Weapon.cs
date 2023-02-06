@@ -11,23 +11,26 @@ public class Weapon : MonoBehaviour
     private Vector3 _ang;
     [NonSerialized] public int BulletType = 1;
 
-    
-
-    private void FixedUpdate()
+    private void Update()
     {
-        mana = MyExtensions.MyExtensions.Check(mana, 10, 10);
-        _cooldown = MyExtensions.MyExtensions.Check(_cooldown, 1, 9);
+        if (Input.GetAxis("Mouse ScrollWheel") == 0) return;
         if (Input.GetAxis("Mouse ScrollWheel") > 0 || Input.GetMouseButtonDown(1))
         {
             if (BulletType >= 3) BulletType = 1;
             else BulletType++;
         }
-
-        if (Input.GetAxis("Mouse ScrollWheel") < 0)
+        else
         {
             if (BulletType <= 1) BulletType = 3;
             else BulletType--;
         }
+    }
+
+
+    private void FixedUpdate()
+    {
+        mana = MyExtensions.MyExtensions.Check(mana, 10, 10);
+        _cooldown = MyExtensions.MyExtensions.Check(_cooldown, 1, 9);
 
         if (!Input.GetMouseButton(0)) return;
         switch (weaponType)
