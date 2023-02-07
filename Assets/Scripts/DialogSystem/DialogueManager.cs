@@ -15,6 +15,7 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(Dialogue dialogue)
     {
+        Debug.Log("Function is owrking");
         boxAnim.SetBool("boxOpen", true);
         startAnim.SetBool("startOpen", false);
 
@@ -24,7 +25,7 @@ public class DialogueManager : MonoBehaviour
         DisplayNextSentences(dialogue.sentences);
     }
 
-    private void DisplayNextSentences(string[] sentences)
+    public void DisplayNextSentences(string[] sentences)
     {
         _index++;
         if(_index == sentences.Length)
