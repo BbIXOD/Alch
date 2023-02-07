@@ -19,7 +19,7 @@ public class DialogueManager : MonoBehaviour
         boxAnim.SetBool("boxOpen", true);
         startAnim.SetBool("startOpen", false);
 
-        nameText.text = dialogueText.name;
+        nameText.text = dialogue.name;
         _index = -1;
         
         DisplayNextSentences(dialogue.sentences);
