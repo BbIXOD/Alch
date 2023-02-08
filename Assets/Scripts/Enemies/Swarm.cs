@@ -11,7 +11,7 @@ public class Swarm : Goblin
         base.Awake();
         normalLive = 4;
         normalSpeed = 3;
-        Agro = 30;
+        Agro = 11;
         Social = Agro;
         leader = GetComponent<Swarm>();
         _me = leader;

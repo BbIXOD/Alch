@@ -8,6 +8,7 @@ public class Player : Entity
     private Rigidbody2D _rb;
     private SpriteRenderer _sr;
     private Camera _camera;
+    [SerializeField] private GameObject compas;
 
     private void Awake()
     {
@@ -18,6 +19,8 @@ public class Player : Entity
         _camera = Camera.main;
         speed = normalSpeed;
         live = normalLive;
+        Instantiate(compas, Vector3.zero, Quaternion.Euler(0, 0, 0))
+            .transform.SetParent(transform, false);
     }
 
     private void Update()

@@ -73,7 +73,7 @@ public abstract class Enemy : Entity
     {
         Pos = _pt.position;
         myPos = transform.position;
-        Dist = (Pos - myPos).magnitude;
+        Dist = ((Vector2)(Pos - myPos)).magnitude;
         agent.speed = speed;
         if (_sleep)
         {
@@ -105,7 +105,7 @@ public abstract class Enemy : Entity
             else
             {
                 _pot.Effects.Add(PotionCollision.Pots.PotionFrost, _pot.duration);
-                speed -= normalSpeed;
+                speed -= normalSpeed / 2;
             }
         }
 
@@ -151,6 +151,10 @@ public abstract class Enemy : Entity
                 return;
             case "Spike(Clone)":
                 GetDamage(2);
+                if (_scream) WakeUp();
+                return;
+            case "Explode(Clone)":
+                if (_scream) WakeUp();
                 return;
         }
     }
@@ -203,5 +207,11 @@ public abstract class Enemy : Entity
         if (!_scream) return;
         _scream = false;
         Agro *= 2;
+    }
+
+    private void OnDestroy()
+    {
+        agent.enabled = false;
+        _player.GetComponent<Throw>().Charge++;
     }
 }
