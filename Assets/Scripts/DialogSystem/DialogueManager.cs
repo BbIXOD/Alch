@@ -9,6 +9,7 @@ public class DialogueManager : MonoBehaviour
     public Text nameText;
 
     public Animator boxAnim;
+<<<<<<< HEAD
     //public Animator startAnim;
     public GameObject startAnim;
 
@@ -19,6 +20,11 @@ public class DialogueManager : MonoBehaviour
     {
         sentences = new Queue<string>();
     }
+=======
+    public Animator startAnim;
+    
+    private short _index;
+>>>>>>> parent of ffd4095 (working dialog system)
 
     public void StartDialogue(Dialogue dialogue)
     {
@@ -28,30 +34,36 @@ public class DialogueManager : MonoBehaviour
         startAnim.SetActive(false);
 
         nameText.text = dialogue.name;
-        sentences.Clear();
-
-        foreach(string sentence in dialogue.sentences)
-        {
-            sentences.Enqueue(sentence);
-        }
+        _index = -1;
         
-        
-        DisplayNextSentences();
+        DisplayNextSentences(dialogue.sentences);
     }
 
-    public void DisplayNextSentences()
+    public void DisplayNextSentences(string[] sentences)
     {
-        if(sentences.Count == 0)
+        _index++;
+        if(_index == sentences.Length)
         {
             EndDialogue();
             return;
         }
-
-        string sentence = sentences.Dequeue();
+        var sentence = sentences[_index];
         StopAllCoroutines();
         StartCoroutine(TypeSentence(sentence));
     }
     
+    private void DisplayPreviousSentences(string[] sentences)
+    {
+        _index--;
+        if(_index < 0)
+        {
+            EndDialogue();
+            return;
+        }
+        var sentence = sentences[_index];
+        StopAllCoroutines();
+        StartCoroutine(TypeSentence(sentence));
+    }
 
     IEnumerator TypeSentence(string sentence)
     {
