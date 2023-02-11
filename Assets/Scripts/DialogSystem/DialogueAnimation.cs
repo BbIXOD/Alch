@@ -17,6 +17,7 @@ public class DialogueAnimation : MonoBehaviour
     public void OnTriggerExit2D(Collider2D collision)
     {
         startAnim.SetActive(false);
+        Debug.Log("Exit Dialogue");
         //startAnim.SetBool("startOpen", false);
         dm.EndDialogue();
     }
