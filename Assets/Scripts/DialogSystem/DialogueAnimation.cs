@@ -4,17 +4,20 @@ using UnityEngine;
 
 public class DialogueAnimation : MonoBehaviour
 {
-    public Animator startAnim;
+    //public Animator startAnim;
+    public GameObject startAnim;
     public DialogueManager dm;
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        startAnim.SetBool("startOpen", true);
+        startAnim.SetActive(true);
+        //startAnim.SetBool("startOpen", true);
     }
 
     public void OnTriggerExit2D(Collider2D collision)
     {
-        startAnim.SetBool("startOpen", false);
+        startAnim.SetActive(false);
+        //startAnim.SetBool("startOpen", false);
         dm.EndDialogue();
     }
 }

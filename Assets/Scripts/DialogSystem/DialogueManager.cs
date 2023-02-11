@@ -9,7 +9,8 @@ public class DialogueManager : MonoBehaviour
     public Text nameText;
 
     public Animator boxAnim;
-    public Animator startAnim;
+    //public Animator startAnim;
+    public GameObject startAnim;
 
     private Queue<string> sentences;
 
@@ -23,7 +24,8 @@ public class DialogueManager : MonoBehaviour
     {
         Debug.Log("Function is owrking");
         boxAnim.SetBool("boxOpen", true);
-        startAnim.SetBool("startOpen", false);
+        //startAnim.SetBool("startOpen", false);
+        startAnim.SetActive(false);
 
         nameText.text = dialogue.name;
         sentences.Clear();
