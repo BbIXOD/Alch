@@ -9,7 +9,7 @@ public class TrackHero : MonoBehaviour
     
     private void Start()
     {
-        _player = GameObject.Find("Player").transform;
+        _player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     
