@@ -47,4 +47,9 @@ public class Boss : Goblin
             Instantiate(minion, v, Quaternion.Euler(tr.eulerAngles));
         }    
     }
+
+    private void OnDestroy()
+    {
+        GameObject.Find("Purple Portal").GetComponent<Collider2D>().isTrigger = true;
+    }
 }

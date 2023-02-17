@@ -13,7 +13,6 @@ public class PBullet : Bullet
     private void Start()
     {
         _ck = GetComponent<CircleCollider2D>();
-        Physics2D.IgnoreCollision(GameObject.Find("Player").GetComponent<Collider2D>(), _ck);
         Speed = 4000f;
         _ren = GetComponent<SpriteRenderer>();
         _ren.material.color = new Color(type % 3 % 2, (type - 1) % 2, (type % 3 + 1) % 3 % 2, 1);
