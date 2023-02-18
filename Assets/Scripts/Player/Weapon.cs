@@ -11,6 +11,13 @@ public class Weapon : MonoBehaviour
     private Vector3 _ang;
     [NonSerialized] public int BulletType = 1;
 
+    private bool _paused;
+
+    public void Pause()
+    {
+        _paused = !_paused;
+    } 
+
     private void Update()
     {
         if (Input.GetAxis("Mouse ScrollWheel") == 0) return;
@@ -32,7 +39,7 @@ public class Weapon : MonoBehaviour
         mana = MyExtensions.MyExtensions.Check(mana, 10, 10);
         _cooldown = MyExtensions.MyExtensions.Check(_cooldown, 1, 9);
 
-        if (!Input.GetMouseButton(0)) return;
+        if (!Input.GetMouseButton(0) || _paused) return;
         switch (weaponType)
         {
             case "Mortar": FireMortar();
