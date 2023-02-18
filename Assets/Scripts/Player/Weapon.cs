@@ -11,12 +11,12 @@ public class Weapon : MonoBehaviour
     private Vector3 _ang;
     [NonSerialized] public int BulletType = 1;
 
-    private bool _paused;
+    private static bool _paused;
 
-    public void Pause()
+    public static void Paused()
     {
         _paused = !_paused;
-    } 
+    }
 
     private void Update()
     {

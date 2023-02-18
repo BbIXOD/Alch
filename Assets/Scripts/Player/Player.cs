@@ -13,7 +13,7 @@ public class Player : Entity
     private void Awake()
     {
         normalLive = 3;
-        normalSpeed = 400;
+        normalSpeed = normalSpeed == 0 ? 400 : normalSpeed;
         _rb = GetComponent<Rigidbody2D>();
         _sr = GetComponent<SpriteRenderer>();
         _camera = Camera.main;
