@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/StartScreen.unity
+    guid: 4b58902551fabcc42a1ce04424b51ddd
+  - enabled: 1
     path: Assets/Scenes/VillageLocation.unity
     guid: b3674b97999bd7641bd15ada70b82df4
   - enabled: 1
@@ -20,4 +23,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FinalTitres.unity
     guid: 674d6f78be481f845b489876cd69d7b3
+  - enabled: 1
+    path: Assets/Scenes/CutScenes/Introduction cutscene.unity
+    guid: 05a31d03739bed84d8357553db5eecfc
+  - enabled: 1
+    path: Assets/Scenes/Rooms/Test room.unity
+    guid: b752ef9e669f3e24abf28e13665e2a2a
   m_configObjects: {}
