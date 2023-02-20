@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 
 public class LoadAfterTime : MonoBehaviour
 {
-    [SerializeField] private string location;
     [SerializeField] private float time;
     private void Awake()
     {
@@ -14,6 +13,6 @@ public class LoadAfterTime : MonoBehaviour
     private IEnumerator NextLoc()
     {
         yield return new WaitForSeconds(time);
-        SceneManager.LoadScene(location);
+        SceneManager.LoadScene(PlayerPrefs.GetString("location"));
     }
 }

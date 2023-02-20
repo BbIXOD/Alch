@@ -12,6 +12,7 @@ public class LoadLoc : MonoBehaviour
     public void NewGame()
     {
         Time.timeScale = 1;
+        PlayerPrefs.SetString("location", "TestRoom");
         SceneManager.LoadScene("Introduction cutscene");
     }
 

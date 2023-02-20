@@ -8,7 +8,7 @@ public class LocChangeTrigger : MonoBehaviour
     private GameObject _text;
     private TextMeshProUGUI _textMesh;
     private bool _here;
-    [SerializeField] private string location;
+    [SerializeField] private string location, cutscene;
 
     private void Awake()
     {
@@ -16,6 +16,7 @@ public class LocChangeTrigger : MonoBehaviour
         _text.SetActive(false);
         _textMesh = _text.GetComponent<TextMeshProUGUI>();
         _textMesh.text = "Press E to leave";
+        cutscene ??= location;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -37,7 +38,7 @@ public class LocChangeTrigger : MonoBehaviour
             else
             {
                 PlayerPrefs.SetString("location", location);
-                SceneManager.LoadScene(location);
+                SceneManager.LoadScene(cutscene);
             }
         }
     }
