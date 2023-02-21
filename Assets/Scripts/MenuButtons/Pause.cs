@@ -8,7 +8,6 @@ public class Pause : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(Time.timeScale);
         if (Input.GetKeyDown(KeyCode.Escape)) ChangeState();
     }
 
