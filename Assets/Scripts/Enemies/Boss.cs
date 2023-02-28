@@ -10,7 +10,7 @@ public class Boss : Goblin
     {
         base.Awake();
         normalSpeed = 2.5f;
-        normalLive = 10;
+        normalLive = 15;
         Agro = 17;
         Social = 10;
         _prb = GameObject.Find("Player").GetComponent<Rigidbody2D>();

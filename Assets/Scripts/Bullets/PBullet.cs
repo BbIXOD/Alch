@@ -20,7 +20,7 @@ public class PBullet : Bullet
         {
             _ck.enabled = false;
             _position = Tr.position;
-            _position += new Vector3(0, 0, 1) * Random.Range(8, 13);
+            _position += new Vector3(0, 0, 1) * Random.Range(9, 14);
             _trajectory = _position.z / 2;
             Speed *= _position.z;
             Speed *= 0.03f;
@@ -37,11 +37,10 @@ public class PBullet : Bullet
         {
             if (_position.z <= 2 && !_ck.enabled) _ck.enabled = true;
             if (_position.z <= 0) return;
-            base.FixedUpdate();
             _position = Tr.position;
             Tr.localScale += new Vector3(2, 2, 0) * ((_position.z - _trajectory) * Time.fixedDeltaTime);
             Tr.Translate(new Vector3(0, 0, -_trajectory * 10) * Time.fixedDeltaTime);
         }
-        else base.FixedUpdate();
+        base.FixedUpdate();
     }
 }
