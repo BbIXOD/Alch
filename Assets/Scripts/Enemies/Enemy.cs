@@ -119,7 +119,7 @@ public abstract class Enemy : Entity
 
         if (Combo(20, 5, 0) && _pot.Effects.ContainsKey(PotionCollision.Pots.PotionFrost))
         {
-            GetDamage(3);
+            GetDamage(5);
             if (live > 0) return;
             for (var i = 0; i < 4; i++)
             {

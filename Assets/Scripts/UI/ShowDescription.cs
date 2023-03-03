@@ -20,7 +20,6 @@ public class ShowDescription : MonoBehaviour
         try
         {
             var description = _obj.Hit.transform.GetComponent<Description>();
-            Debug.Log(description.description);
             _tmp.SetActive(true);
             _textMeshPro.SetText(description.description);
         }

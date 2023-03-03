@@ -29,4 +29,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Rooms/Test room.unity
     guid: b752ef9e669f3e24abf28e13665e2a2a
+  - enabled: 1
+    path: Assets/Scenes/CutScenes/Betwen scenes.unity
+    guid: 7ac9574b3f5f9cd4db0ae1802eb98d62
+  - enabled: 1
+    path: Assets/Scenes/CutScenes/Loading.unity
+    guid: 3ad7b1c8b22ad5a44afd93a4b7139e4f
   m_configObjects: {}

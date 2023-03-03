@@ -6,6 +6,9 @@ public class Portal : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.CompareTag("Player") && GetComponents<Boss>().Length == 0)
+        {
+            PlayerPrefs.SetString("location", "FinalTitres");
             SceneManager.LoadScene("FinalTitres");
+        }
     }
 }
