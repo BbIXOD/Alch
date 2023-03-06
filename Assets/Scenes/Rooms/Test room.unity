@@ -547,6 +547,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   location: VillageLocation
+  cutscene: 
 --- !u!1 &287743182
 GameObject:
   m_ObjectHideFlags: 0
@@ -12043,7 +12044,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7496edd897466f4790ebdba201914d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
+  speed: 250
   normalSpeed: 0
   live: 0
   normalLive: 0
@@ -13707,7 +13708,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &171697349063567693
 MonoBehaviour:
   m_ObjectHideFlags: 0
